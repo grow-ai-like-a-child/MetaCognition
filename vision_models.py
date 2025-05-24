@@ -25,22 +25,29 @@ class VisionModelInterface:
     """
     
     def __init__(self, openai_api_key: Optional[str] = None, 
-                 anthropic_api_key: Optional[str] = None):
+                 anthropic_api_key: Optional[str] = None,
+                 gemini_api_key: Optional[str] = None):
         """
         Initialize API clients.
         
         Args:
             openai_api_key: OpenAI API key for GPT-4o
             anthropic_api_key: Anthropic API key for Claude Sonnet 3.5
+            gemini_api_key: Google API key for Gemini Pro Vision
         """
         self.openai_client = None
         self.anthropic_client = None
+        self.gemini_client = None
         
         if openai_api_key:
             self.openai_client = openai.OpenAI(api_key=openai_api_key)
         
         if anthropic_api_key:
             self.anthropic_client = anthropic.Anthropic(api_key=anthropic_api_key)
+        
+        if gemini_api_key:
+            genai.configure(api_key=gemini_api_key)
+            self.gemini_client = genai.GenerativeModel('gemini-1.5-pro')
         
         # Set up logging
         logging.basicConfig(level=logging.INFO)
@@ -80,7 +87,7 @@ Use the full confidence scale:
 Now examine the two temporal intervals:"""
     
     async def query_gpt4o(self, first_image_b64: str, second_image_b64: str, 
-                         trial_info: Dict) -> ModelResponse:
+                         trial_info: Dict, model_name: str = "gpt-4o") -> ModelResponse:
         """
         Query GPT-4o with vision capability.
         
@@ -88,6 +95,7 @@ Now examine the two temporal intervals:"""
             first_image_b64: Base64 encoded first interval image
             second_image_b64: Base64 encoded second interval image
             trial_info: Information about the trial
+            model_name: Specific GPT model version to use
         """
         if not self.openai_client:
             raise ValueError("OpenAI client not initialized. Please provide API key.")
@@ -123,7 +131,7 @@ Now examine the two temporal intervals:"""
         
         try:
             response = self.openai_client.chat.completions.create(
-                model="gpt-4o",
+                model=model_name,
                 messages=messages,
                 max_tokens=500,
                 temperature=0.1
@@ -136,7 +144,7 @@ Now examine the two temporal intervals:"""
             choice, confidence = self._parse_response(raw_response)
             
             return ModelResponse(
-                model_name="gpt-4o",
+                model_name=model_name,
                 perceptual_choice=choice,
                 confidence=confidence,
                 response_time=response_time,
@@ -146,9 +154,9 @@ Now examine the two temporal intervals:"""
             )
             
         except Exception as e:
-            self.logger.error(f"GPT-4o query failed: {e}")
+            self.logger.error(f"GPT query failed with model {model_name}: {e}")
             return ModelResponse(
-                model_name="gpt-4o",
+                model_name=model_name,
                 perceptual_choice=-1,  # Error indicator
                 confidence=-1,
                 response_time=time.time() - start_time,
@@ -158,7 +166,7 @@ Now examine the two temporal intervals:"""
             )
     
     async def query_claude(self, first_image_b64: str, second_image_b64: str,
-                          trial_info: Dict) -> ModelResponse:
+                          trial_info: Dict, model_name: str = "claude-3-5-sonnet-20241022") -> ModelResponse:
         """
         Query Claude Sonnet 3.5 with vision capability.
         
@@ -166,6 +174,7 @@ Now examine the two temporal intervals:"""
             first_image_b64: Base64 encoded first interval image
             second_image_b64: Base64 encoded second interval image
             trial_info: Information about the trial
+            model_name: Specific Claude model version to use
         """
         if not self.anthropic_client:
             raise ValueError("Anthropic client not initialized. Please provide API key.")
@@ -176,7 +185,7 @@ Now examine the two temporal intervals:"""
         
         try:
             message = self.anthropic_client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+                model=model_name,
                 max_tokens=500,
                 temperature=0.1,
                 messages=[
@@ -214,7 +223,7 @@ Now examine the two temporal intervals:"""
             choice, confidence = self._parse_response(raw_response)
             
             return ModelResponse(
-                model_name="claude-3.5-sonnet",
+                model_name=model_name,
                 perceptual_choice=choice,
                 confidence=confidence,
                 response_time=response_time,
@@ -224,9 +233,9 @@ Now examine the two temporal intervals:"""
             )
             
         except Exception as e:
-            self.logger.error(f"Claude query failed: {e}")
+            self.logger.error(f"Claude query failed with model {model_name}: {e}")
             return ModelResponse(
-                model_name="claude-3.5-sonnet",
+                model_name=model_name,
                 perceptual_choice=-1,  # Error indicator
                 confidence=-1,
                 response_time=time.time() - start_time,
@@ -301,7 +310,7 @@ Now examine the two temporal intervals:"""
             first_image_b64: Base64 encoded first interval image
             second_image_b64: Base64 encoded second interval image
             trial_info: Information about the trial
-            models: List of models to test ["gpt-4o", "claude"]
+            models: List of models to test (e.g., ["gpt-4o", "claude"] or specific versions)
             
         Returns:
             List of ModelResponse objects
@@ -316,11 +325,12 @@ Now examine the two temporal intervals:"""
         tasks = []
         
         for model in models:
-            if model == "gpt-4o" and self.openai_client:
-                task = self.query_gpt4o(first_image_b64, second_image_b64, trial_info)
+            # More flexible model matching - check if model name contains the base model name
+            if ("gpt-4o" in model.lower() or model.lower() == "gpt-4o") and self.openai_client:
+                task = self.query_gpt4o(first_image_b64, second_image_b64, trial_info, model)
                 tasks.append(task)
-            elif model == "claude" and self.anthropic_client:
-                task = self.query_claude(first_image_b64, second_image_b64, trial_info)
+            elif ("claude" in model.lower() or model.lower() == "claude") and self.anthropic_client:
+                task = self.query_claude(first_image_b64, second_image_b64, trial_info, model)
                 tasks.append(task)
         
         if not tasks:
