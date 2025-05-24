@@ -1,0 +1,21 @@
+{
+  "n_trials_per_session": 25,
+  "target_performance": 0.71,
+  "models_to_test": [
+    "gpt-4o",
+    "claude"
+  ],
+  "save_images": false,
+  "staircase_params": {
+    "initial_contrast": 0.5,
+    "step_size_up": 0.05,
+    "step_size_down": 0.02,
+    "min_contrast": 0.1,
+    "max_contrast": 1.0
+  },
+  "stimulus_params": {
+    "image_size": 400,
+    "patch_size": 60,
+    "spatial_freq": 0.1
+  }
+}
