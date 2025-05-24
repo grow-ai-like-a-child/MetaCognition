@@ -7,6 +7,8 @@ from typing import Dict, List, Optional
 import logging
 import os
 from pathlib import Path
+import openai
+import anthropic
 
 from gabor_stimulus import GaborStimulus
 from staircase import AdaptiveStaircase, MultiLocationStaircase
@@ -338,13 +340,22 @@ class MetacognitionExperiment:
             with open(config_file, 'r') as f:
                 keys = json.load(f)
             
-            if 'openai_key' in keys:
+            if 'openai_key' in keys and keys['openai_key']:
                 self.vision_interface.openai_client = openai.OpenAI(api_key=keys['openai_key'])
                 self.logger.info("OpenAI API key loaded")
             
-            if 'anthropic_key' in keys:
+            if 'anthropic_key' in keys and keys['anthropic_key']:
                 self.vision_interface.anthropic_client = anthropic.Anthropic(api_key=keys['anthropic_key'])
                 self.logger.info("Anthropic API key loaded")
+            
+            if 'gemini_key' in keys and keys['gemini_key']:
+                try:
+                    import google.generativeai as genai
+                    genai.configure(api_key=keys['gemini_key'])
+                    self.vision_interface.gemini_client = genai.GenerativeModel('gemini-1.5-pro')
+                    self.logger.info("Gemini API key loaded")
+                except ImportError:
+                    self.logger.warning("google-generativeai not installed, skipping Gemini initialization")
                 
         except FileNotFoundError:
             self.logger.warning(f"Config file {config_file} not found")
