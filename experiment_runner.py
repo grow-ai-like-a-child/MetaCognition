@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import logging
 import os
 from pathlib import Path
@@ -124,16 +124,17 @@ class MetacognitionExperiment:
         
         return trial_info
     
-    async def run_single_trial(self, trial_number: int, models: List[str] = None) -> List[ModelResponse]:
+    async def run_single_trial(self, trial_number: int, session_dir: Path, models: List[str] = None):
         """
         Run a single trial with specified models.
         
         Args:
             trial_number: Current trial number
+            session_dir: Session directory for saving data
             models: List of models to test
             
         Returns:
-            List of model responses
+            Tuple of (trial_info, list of model responses)
         """
         self.logger.info(f"Starting trial {trial_number}")
         
@@ -169,22 +170,23 @@ class MetacognitionExperiment:
                         )
                         break
             
-            # Save trial data
-            self.save_trial_data(trial_info, responses)
+            # Save trial data to session directory
+            self.save_trial_data(trial_info, responses, session_dir)
             
-            return responses
+            return trial_info, responses
             
         except Exception as e:
             self.logger.error(f"Trial {trial_number} failed: {e}")
-            return []
+            return trial_info, []
     
-    def save_trial_data(self, trial_info: Dict, responses: List[ModelResponse]):
+    def save_trial_data(self, trial_info: Dict, responses: List[ModelResponse], session_dir: Path):
         """
         Save trial data to files.
         
         Args:
             trial_info: Trial information
             responses: Model responses
+            session_dir: Session directory to save files in
         """
         # Prepare data for saving
         trial_data = {
@@ -203,8 +205,8 @@ class MetacognitionExperiment:
                 'correct': response.perceptual_choice == trial_info['correct_answer']
             })
         
-        # Save individual trial
-        trial_file = self.output_dir / f"trial_{trial_info['trial_number']:03d}.json"
+        # Save individual trial in the session directory
+        trial_file = session_dir / f"trial_{trial_info['trial_number']:03d}.json"
         with open(trial_file, 'w') as f:
             json.dump(trial_data, f, indent=2, default=str)
     
@@ -234,12 +236,12 @@ class MetacognitionExperiment:
         
         for trial_num in range(1, self.n_trials_per_session + 1):
             try:
-                responses = await self.run_single_trial(trial_num, models)
+                trial_info, responses = await self.run_single_trial(trial_num, session_dir, models)
                 all_responses.extend(responses)
                 
                 # Optional: save stimulus images
                 if save_images and responses:
-                    self.save_stimulus_images(trial_num, images_dir)
+                    self.save_stimulus_images(trial_info, images_dir)
                 
                 # Brief pause between trials
                 await asyncio.sleep(1)
@@ -253,11 +255,44 @@ class MetacognitionExperiment:
         
         self.logger.info(f"Session completed. Results saved to {session_dir}")
     
-    def save_stimulus_images(self, trial_num: int, images_dir: Path):
+    def save_stimulus_images(self, trial_info: Dict, images_dir: Path):
         """Save stimulus images for debugging/visualization."""
-        # This would save the actual stimulus images
-        # Implementation depends on whether you want to save them
-        pass
+        import base64
+        from PIL import Image
+        from io import BytesIO
+        
+        trial_num = trial_info['trial_number']
+        
+        # Save first interval image
+        first_image_data = base64.b64decode(trial_info['first_image_b64'])
+        first_image = Image.open(BytesIO(first_image_data))
+        first_image_path = images_dir / f"trial_{trial_num:03d}_interval_1.png"
+        first_image.save(first_image_path)
+        
+        # Save second interval image
+        second_image_data = base64.b64decode(trial_info['second_image_b64'])
+        second_image = Image.open(BytesIO(second_image_data))
+        second_image_path = images_dir / f"trial_{trial_num:03d}_interval_2.png"
+        second_image.save(second_image_path)
+        
+        self.logger.info(f"Saved stimulus images for trial {trial_num}")
+        
+        # Also save trial metadata with image info
+        trial_metadata = {
+            'trial_number': trial_num,
+            'first_location': trial_info['first_location'],
+            'second_location': trial_info['second_location'],
+            'first_contrast': trial_info['first_contrast'],
+            'second_contrast': trial_info['second_contrast'],
+            'target_contrast': trial_info['target_contrast'],
+            'correct_answer': trial_info['correct_answer'],
+            'first_image_file': f"trial_{trial_num:03d}_interval_1.png",
+            'second_image_file': f"trial_{trial_num:03d}_interval_2.png"
+        }
+        
+        metadata_path = images_dir / f"trial_{trial_num:03d}_metadata.json"
+        with open(metadata_path, 'w') as f:
+            json.dump(trial_metadata, f, indent=2, default=str)
     
     def generate_session_summary(self, session_dir: Path, all_responses: List[ModelResponse]):
         """

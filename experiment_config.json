@@ -2,9 +2,10 @@
   "n_trials_per_session": 50,
   "target_performance": 0.71,
   "models_to_test": [
-    "gpt-4.1-mini",
+    "gpt-4o",
     "claude-3-5-sonnet-20240620"
   ],
+  "save_images": true,
   "staircase_params": {
     "initial_contrast": 0.5,
     "step_size_up": 0.05,

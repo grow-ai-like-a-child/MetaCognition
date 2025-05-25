@@ -323,18 +323,51 @@ Now examine the two temporal intervals:"""
                 models.append("claude")
         
         tasks = []
+        skipped_models = []
         
         for model in models:
-            # More flexible model matching - check if model name contains the base model name
-            if ("gpt-4o" in model.lower() or model.lower() == "gpt-4o") and self.openai_client:
+            # More comprehensive model matching
+            model_lower = model.lower()
+            
+            # OpenAI GPT models (including gpt-4o, gpt-4o-mini, gpt-4-vision-preview, etc.)
+            if any(gpt_pattern in model_lower for gpt_pattern in ["gpt-4o", "gpt-4-vision", "gpt-vision"]) and self.openai_client:
                 task = self.query_gpt4o(first_image_b64, second_image_b64, trial_info, model)
                 tasks.append(task)
-            elif ("claude" in model.lower() or model.lower() == "claude") and self.anthropic_client:
+                self.logger.info(f"Queuing GPT model: {model}")
+            # Claude models
+            elif ("claude" in model_lower) and self.anthropic_client:
                 task = self.query_claude(first_image_b64, second_image_b64, trial_info, model)
                 tasks.append(task)
+                self.logger.info(f"Queuing Claude model: {model}")
+            else:
+                # Log which models are being skipped and why
+                if "gpt" in model_lower and not self.openai_client:
+                    reason = "OpenAI client not initialized"
+                elif "claude" in model_lower and not self.anthropic_client:
+                    reason = "Anthropic client not initialized"
+                elif "gpt" in model_lower:
+                    reason = f"Unsupported GPT model: {model} (supported: gpt-4o, gpt-4o-mini, gpt-4-vision-preview)"
+                else:
+                    reason = f"Unsupported model: {model}"
+                
+                skipped_models.append((model, reason))
+                self.logger.warning(f"Skipping model {model}: {reason}")
+        
+        if skipped_models:
+            self.logger.warning(f"Skipped models: {skipped_models}")
         
         if not tasks:
-            raise ValueError("No valid models available for testing")
+            available_models = []
+            if self.openai_client:
+                available_models.append("OpenAI GPT models (gpt-4o, gpt-4o-mini)")
+            if self.anthropic_client:
+                available_models.append("Claude models")
+            
+            error_msg = f"No valid models available for testing. Requested: {models}, Available: {available_models}"
+            self.logger.error(error_msg)
+            raise ValueError(error_msg)
+        
+        self.logger.info(f"Running {len(tasks)} model queries concurrently")
         
         # Run all model queries concurrently
         responses = await asyncio.gather(*tasks, return_exceptions=True)
