@@ -1,0 +1,45 @@
+{
+  "claude-3-5-sonnet-20240620": {
+    "accuracy": 0.68,
+    "n_trials": 50,
+    "mean_confidence": 3.5,
+    "metacognitive_sensitivity": 0.4595588235294117,
+    "mean_response_time": 207.66965898513794,
+    "confidence_distribution": {
+      "1": 0,
+      "2": 0,
+      "3": 27,
+      "4": 21,
+      "5": 2,
+      "6": 0
+    },
+    "accuracy_by_confidence": {
+      "3": {
+        "accuracy": 0.5185185185185185,
+        "n_trials": 27
+      },
+      "4": {
+        "accuracy": 0.8571428571428571,
+        "n_trials": 21
+      },
+      "5": {
+        "accuracy": 1.0,
+        "n_trials": 2
+      }
+    }
+  },
+  "staircase": {
+    "final_stats": {
+      "overall_performance": 0.68,
+      "recent_performance": 0.8,
+      "n_trials": 50,
+      "n_correct": 34,
+      "current_contrast": 0.5500000000000002,
+      "n_reversals": 5,
+      "threshold_estimate": null
+    },
+    "threshold_estimate": null,
+    "converged": false,
+    "n_reversals": 5
+  }
+}
