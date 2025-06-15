@@ -2,7 +2,7 @@
   "n_trials_per_session": 50,
   "target_performance": 0.71,
   "models_to_test": [
-    "gpt-4o",
+    "claude-opus-4-20250514",
     "claude-3-5-sonnet-20240620"
   ],
   "save_images": true,

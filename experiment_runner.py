@@ -156,9 +156,14 @@ class MetacognitionExperiment:
                 for response in responses:
                     if response.perceptual_choice in [1, 2]:
                         correct = response.perceptual_choice == trial_info['correct_answer']
-                        self.staircase.update(correct)
                         
-                        # Add to analyzer
+                        # Only update staircase with the first valid response
+                        # to avoid multiple updates per trial
+                        if not hasattr(self, '_staircase_updated_this_trial'):
+                            self.staircase.update(correct)
+                            self._staircase_updated_this_trial = True
+                        
+                        # Add to analyzer (process all valid responses)
                         self.analyzer.add_response(response, trial_info['correct_answer'])
                         
                         self.logger.info(
@@ -168,7 +173,10 @@ class MetacognitionExperiment:
                             f"Confidence: {response.confidence}, "
                             f"Accuracy: {correct}"
                         )
-                        break
+                
+                # Reset the staircase update flag for the next trial
+                if hasattr(self, '_staircase_updated_this_trial'):
+                    delattr(self, '_staircase_updated_this_trial')
             
             # Save trial data to session directory
             self.save_trial_data(trial_info, responses, session_dir)
