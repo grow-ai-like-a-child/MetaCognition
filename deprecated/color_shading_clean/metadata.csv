@@ -1,0 +1,49 @@
+filename,pair_type,word_left,word_right,contrast_type,color_left,color_right,position_mode
+img_000_SameWord_High_Left-Right.png,Same Word,Dog,Dog,High,black,white,Left-Right
+img_001_SameWord_High_Top-Bottom.png,Same Word,Dog,Dog,High,black,white,Top-Bottom
+img_002_SameWord_High_Random.png,Same Word,Dog,Dog,High,black,white,Random
+img_003_SameWord_High_Symmetric.png,Same Word,Dog,Dog,High,black,white,Symmetric
+img_004_SameWord_Low_Left-Right.png,Same Word,Dog,Dog,Low,dimgray,lightgray,Left-Right
+img_005_SameWord_Low_Top-Bottom.png,Same Word,Dog,Dog,Low,dimgray,lightgray,Top-Bottom
+img_006_SameWord_Low_Random.png,Same Word,Dog,Dog,Low,dimgray,lightgray,Random
+img_007_SameWord_Low_Symmetric.png,Same Word,Dog,Dog,Low,dimgray,lightgray,Symmetric
+img_008_SameWord_Color_Left-Right.png,Same Word,Dog,Dog,Color,red,pink,Left-Right
+img_009_SameWord_Color_Top-Bottom.png,Same Word,Dog,Dog,Color,red,pink,Top-Bottom
+img_010_SameWord_Color_Random.png,Same Word,Dog,Dog,Color,red,pink,Random
+img_011_SameWord_Color_Symmetric.png,Same Word,Dog,Dog,Color,red,pink,Symmetric
+img_012_DifferentWords_High_Left-Right.png,Different Words,Dog,Cat,High,black,white,Left-Right
+img_013_DifferentWords_High_Top-Bottom.png,Different Words,Dog,Cat,High,black,white,Top-Bottom
+img_014_DifferentWords_High_Random.png,Different Words,Dog,Cat,High,black,white,Random
+img_015_DifferentWords_High_Symmetric.png,Different Words,Dog,Cat,High,black,white,Symmetric
+img_016_DifferentWords_Low_Left-Right.png,Different Words,Dog,Cat,Low,dimgray,lightgray,Left-Right
+img_017_DifferentWords_Low_Top-Bottom.png,Different Words,Dog,Cat,Low,dimgray,lightgray,Top-Bottom
+img_018_DifferentWords_Low_Random.png,Different Words,Dog,Cat,Low,dimgray,lightgray,Random
+img_019_DifferentWords_Low_Symmetric.png,Different Words,Dog,Cat,Low,dimgray,lightgray,Symmetric
+img_020_DifferentWords_Color_Left-Right.png,Different Words,Dog,Cat,Color,red,pink,Left-Right
+img_021_DifferentWords_Color_Top-Bottom.png,Different Words,Dog,Cat,Color,red,pink,Top-Bottom
+img_022_DifferentWords_Color_Random.png,Different Words,Dog,Cat,Color,red,pink,Random
+img_023_DifferentWords_Color_Symmetric.png,Different Words,Dog,Cat,Color,red,pink,Symmetric
+img_024_SemanticConflict_High_Left-Right.png,Semantic Conflict,Happy,Sad,High,black,white,Left-Right
+img_025_SemanticConflict_High_Top-Bottom.png,Semantic Conflict,Happy,Sad,High,black,white,Top-Bottom
+img_026_SemanticConflict_High_Random.png,Semantic Conflict,Happy,Sad,High,black,white,Random
+img_027_SemanticConflict_High_Symmetric.png,Semantic Conflict,Happy,Sad,High,black,white,Symmetric
+img_028_SemanticConflict_Low_Left-Right.png,Semantic Conflict,Happy,Sad,Low,dimgray,lightgray,Left-Right
+img_029_SemanticConflict_Low_Top-Bottom.png,Semantic Conflict,Happy,Sad,Low,dimgray,lightgray,Top-Bottom
+img_030_SemanticConflict_Low_Random.png,Semantic Conflict,Happy,Sad,Low,dimgray,lightgray,Random
+img_031_SemanticConflict_Low_Symmetric.png,Semantic Conflict,Happy,Sad,Low,dimgray,lightgray,Symmetric
+img_032_SemanticConflict_Color_Left-Right.png,Semantic Conflict,Happy,Sad,Color,red,pink,Left-Right
+img_033_SemanticConflict_Color_Top-Bottom.png,Semantic Conflict,Happy,Sad,Color,red,pink,Top-Bottom
+img_034_SemanticConflict_Color_Random.png,Semantic Conflict,Happy,Sad,Color,red,pink,Random
+img_035_SemanticConflict_Color_Symmetric.png,Semantic Conflict,Happy,Sad,Color,red,pink,Symmetric
+img_036_EmotionalvsNeutral_High_Left-Right.png,Emotional vs Neutral,Fear,Box,High,black,white,Left-Right
+img_037_EmotionalvsNeutral_High_Top-Bottom.png,Emotional vs Neutral,Fear,Box,High,black,white,Top-Bottom
+img_038_EmotionalvsNeutral_High_Random.png,Emotional vs Neutral,Fear,Box,High,black,white,Random
+img_039_EmotionalvsNeutral_High_Symmetric.png,Emotional vs Neutral,Fear,Box,High,black,white,Symmetric
+img_040_EmotionalvsNeutral_Low_Left-Right.png,Emotional vs Neutral,Fear,Box,Low,dimgray,lightgray,Left-Right
+img_041_EmotionalvsNeutral_Low_Top-Bottom.png,Emotional vs Neutral,Fear,Box,Low,dimgray,lightgray,Top-Bottom
+img_042_EmotionalvsNeutral_Low_Random.png,Emotional vs Neutral,Fear,Box,Low,dimgray,lightgray,Random
+img_043_EmotionalvsNeutral_Low_Symmetric.png,Emotional vs Neutral,Fear,Box,Low,dimgray,lightgray,Symmetric
+img_044_EmotionalvsNeutral_Color_Left-Right.png,Emotional vs Neutral,Fear,Box,Color,red,pink,Left-Right
+img_045_EmotionalvsNeutral_Color_Top-Bottom.png,Emotional vs Neutral,Fear,Box,Color,red,pink,Top-Bottom
+img_046_EmotionalvsNeutral_Color_Random.png,Emotional vs Neutral,Fear,Box,Color,red,pink,Random
+img_047_EmotionalvsNeutral_Color_Symmetric.png,Emotional vs Neutral,Fear,Box,Color,red,pink,Symmetric
