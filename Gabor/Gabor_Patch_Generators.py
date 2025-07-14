@@ -41,7 +41,7 @@ orientation_levels = {
 }
 
 # 输出目录
-output_dir = "gabor_36"
+output_dir = "data/gabor_36"
 os.makedirs(output_dir, exist_ok=True)
 
 # 保存信息
@@ -76,5 +76,5 @@ for c_name, c_val in contrast_levels.items():
 
 # 保存 metadata CSV
 df = pd.DataFrame(records)
-df.to_csv("gabor_36_metadata.csv", index=False)
+df.to_csv(os.path.join(output_dir, "gabor_36_metadata.csv"), index=False)
 print("✅ 成功生成 36 张 Gabor Patch，并导出 gabor_36_metadata.csv")
