@@ -1,44 +1,76 @@
-## This is the codebase for MetaCognition
+# 🧠 MetaCognition
 
-# How to use?
+A codebase for generating experimental data across **Color**, **Gabor**, and **XO\_Grid** settings for the MetaCognition project.
 
-First create a new conda env - 
+---
 
-```
+## 🚀 Quick Start
+
+### 1. Create Environment
+
+```bash
 conda create -n metacognition python=3.10
+conda activate metacognition
 ```
 
-Install all neccesary packages with 
-```
+### 2. Install Requirements
+
+```bash
 python -m pip install -r requirements.txt
 ```
 
-To generate all data in Color setting,
-```python Color/Color_Gene.py```
+---
 
-To generate all data in Gabor setting
-```python Gabor/Gabor_Patch_Generators.py```
+## 🧪 Generate Data
 
-To generate all data in XO_Grid setting
-```python XO_Grid/90pcto.py```
+All generated data will be saved into the `data/` folder.
 
-All data will be saved into a data folder 
+### ▶️ Color Setting
 
-1) 
-Repository Explanation
--Color
---color_shading_groundtruth
---Color_Gene.py
-# This is the code to generate the experiment data for Color Experiment. Please refer to [https://docs.google.com/document/d/1yqHH4spfVSg0gSNLIoSmdScTMH12f9tfs9h7wAQ2tlI/edit?tab=t.0#heading=h.38tt23dbxxgn]
--Gabor
---gabor_36
---Gabor_Patch_Generators.py
-# This is the code to generate the experiment data for Gabor Experiment. Please refer to [https://docs.google.com/document/d/1yqHH4spfVSg0gSNLIoSmdScTMH12f9tfs9h7wAQ2tlI/edit?tab=t.0#heading=h.38tt23dbxxgn]
--XO_Grid
---xo_grids_strict
---90pcto.py
-# This is the code to generate the experiment data for Grid Experiment. Please refer to [https://docs.google.com/document/d/1yqHH4spfVSg0gSNLIoSmdScTMH12f9tfs9h7wAQ2tlI/edit?tab=t.0#heading=h.38tt23dbxxgn]
--deprecated
-# Here is where we put the deprecated files.
+```bash
+python Color/Color_Gene.py
+```
 
-2)
+### ▶️ Gabor Setting
+
+```bash
+python Gabor/Gabor_Patch_Generators.py
+```
+
+### ▶️ XO\_Grid Setting
+
+```bash
+python XO_Grid/90pcto.py
+```
+
+---
+
+## 📁 Repository Structure
+
+```
+MetaCognition/
+│
+├── Color/
+│   ├── color_shading_groundtruth/
+│   └── Color_Gene.py  ← Color experiment generator
+│
+├── Gabor/
+│   ├── gabor_36/
+│   └── Gabor_Patch_Generators.py  ← Gabor experiment generator
+│
+├── XO_Grid/
+│   ├── xo_grids_strict/
+│   └── 90pcto.py  ← Grid experiment generator
+│
+├── deprecated/  ← Archive for outdated or unused files
+└── requirements.txt
+```
+
+For full documentation on experiment logic and task design, see our [Project Guide](https://docs.google.com/document/d/1yqHH4spfVSg0gSNLIoSmdScTMH12f9tfs9h7wAQ2tlI/edit?tab=t.0#heading=h.38tt23dbxxgn).
+
+---
+
+## 📝 Citation & License
+
+If you use this codebase, please cite the corresponding paper (link coming soon).
+Licensed under [MIT](LICENSE).
