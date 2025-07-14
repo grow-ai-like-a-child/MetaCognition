@@ -10,7 +10,7 @@ conda create -n metacognition python=3.10
 
 Install all neccesary packages with 
 ```
-python -m pip install -r requirments.txt
+python -m pip install -r requirements.txt
 ```
 
 To generate all data in Color setting,
@@ -21,6 +21,8 @@ To generate all data in Gabor setting
 
 To generate all data in XO_Grid setting
 ```python XO_Grid/90pcto.py```
+
+All data will be saved into a data folder 
 
 1) 
 Repository Explanation

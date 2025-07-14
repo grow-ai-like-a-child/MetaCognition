@@ -12,7 +12,7 @@ xo_ratios = [
 ]
 distributions = ["uniform", "random", "clustered", "symmetric"]
 
-output_dir = "xo_grids_strict"
+output_dir = "data/xo_grids_strict"
 os.makedirs(output_dir, exist_ok=True)
 
 # 绘图函数
@@ -116,5 +116,5 @@ for size in grid_sizes:
 
 # 保存 CSV 文件
 df = pd.DataFrame(records)
-df.to_csv("xo_grid_strict_metadata.csv", index=False)
+df.to_csv(os.path.join(output_dir, "xo_grid_strict_metadata.csv"), index=False)
 print("✅ 所有图像已生成完毕，结构一致性已修复！")

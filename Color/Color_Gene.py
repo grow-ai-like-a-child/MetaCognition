@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # 输出目录
-output_dir = "color_shading_groundtruth"
+output_dir = "data/color_shading_groundtruth"
 os.makedirs(output_dir, exist_ok=True)
 
 # 词对类型及示例
@@ -92,6 +92,6 @@ for pair_type, wordlist in word_bank.items():
 
 # 保存 CSV
 df = pd.DataFrame(metadata)
-df.to_csv(os.path.join(output_dir, "metadata.csv"), index=False)
+df.to_csv(os.path.join(output_dir, "color_shading_groundtruth_metadata.csv"), index=False)
 
 print(f"✅ 已生成 {img_id} 张图像（含 ground truth 标签），保存至 '{output_dir}/'")
