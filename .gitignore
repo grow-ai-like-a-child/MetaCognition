@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Project caches & outputs
+MetaCognition_Engineering/cache/
+MetaCognition_Engineering/.cache/
+MetaCognition_Engineering/output/
+MetaCognition_Engineering/outputs/
+MetaCognition_Engineering/logs/
+*.log
+
+# Large images (keep repo lean)
+MetaCognition_Engineering/**/*.png
+MetaCognition_Engineering/**/*.jpg
+MetaCognition_Engineering/**/*.jpeg
