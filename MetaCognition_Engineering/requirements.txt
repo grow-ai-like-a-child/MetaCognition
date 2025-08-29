@@ -1,0 +1,21 @@
+# Two-Stage Questioning Cognitive Experiment System Dependencies
+
+# Core Dependencies
+numpy>=1.21.0
+pillow>=8.3.0
+matplotlib>=3.4.0
+
+# Image Processing
+opencv-python>=4.5.0
+scikit-image>=0.18.0
+
+# Data Processing
+pandas>=1.3.0
+
+# Optional: OpenAI API Support
+# openai>=1.0.0
+
+# Development Dependencies (Optional)
+# pytest>=6.0.0
+# black>=21.0.0
+# flake8>=3.9.0
