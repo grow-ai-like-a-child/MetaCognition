@@ -106,7 +106,11 @@ def cmd_gen(catalog: Path, imgroot: Path, only_task: str | None = None) -> None:
             continue
         
         try:
-            mod.generate(params, str(out_dir))
+            # 生成图片，获取生成的文件路径
+            generated_path = mod.generate(params, str(out_dir))
+            # 重命名为qid格式
+            if generated_path and Path(generated_path).exists():
+                Path(generated_path).rename(out_path)
             n_generated += 1
         except Exception as e:
             print(f"[gen] failed to generate {qid}: {e}")

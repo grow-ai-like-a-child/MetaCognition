@@ -1,0 +1,6 @@
+{"qid": "GRID-0001_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 624.2630481719971, "stage": 1, "original_qid": "GRID-0001"}
+{"qid": "GRID-0001_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 448.9595890045166, "stage": 2, "original_qid": "GRID-0001"}
+{"qid": "GRID-0002_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 198.10986518859863, "stage": 1, "original_qid": "GRID-0002"}
+{"qid": "GRID-0002_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 432.3008060455322, "stage": 2, "original_qid": "GRID-0002"}
+{"qid": "GRID-0003_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 198.44913482666016, "stage": 1, "original_qid": "GRID-0003"}
+{"qid": "GRID-0003_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 426.39660835266113, "stage": 2, "original_qid": "GRID-0003"}
