@@ -1,0 +1,100 @@
+{"qid": "GRID-0001_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 657.5753688812256, "stage": 1, "original_qid": "GRID-0001"}
+{"qid": "GRID-0001_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 496.3815212249756, "stage": 2, "original_qid": "GRID-0001"}
+{"qid": "GRID-0002_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 215.18659591674805, "stage": 1, "original_qid": "GRID-0002"}
+{"qid": "GRID-0002_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 477.9472351074219, "stage": 2, "original_qid": "GRID-0002"}
+{"qid": "GRID-0003_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 216.77851676940918, "stage": 1, "original_qid": "GRID-0003"}
+{"qid": "GRID-0003_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 476.6228199005127, "stage": 2, "original_qid": "GRID-0003"}
+{"qid": "GRID-0004_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 200.5443572998047, "stage": 1, "original_qid": "GRID-0004"}
+{"qid": "GRID-0004_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 443.2704448699951, "stage": 2, "original_qid": "GRID-0004"}
+{"qid": "GRID-0005_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 199.62692260742188, "stage": 1, "original_qid": "GRID-0005"}
+{"qid": "GRID-0005_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 445.04547119140625, "stage": 2, "original_qid": "GRID-0005"}
+{"qid": "GRID-0006_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 201.39575004577637, "stage": 1, "original_qid": "GRID-0006"}
+{"qid": "GRID-0006_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 450.2065181732178, "stage": 2, "original_qid": "GRID-0006"}
+{"qid": "GRID-0007_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 202.84152030944824, "stage": 1, "original_qid": "GRID-0007"}
+{"qid": "GRID-0007_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 451.99131965637207, "stage": 2, "original_qid": "GRID-0007"}
+{"qid": "GRID-0008_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 205.1839828491211, "stage": 1, "original_qid": "GRID-0008"}
+{"qid": "GRID-0008_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 449.31626319885254, "stage": 2, "original_qid": "GRID-0008"}
+{"qid": "GRID-0009_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 202.79192924499512, "stage": 1, "original_qid": "GRID-0009"}
+{"qid": "GRID-0009_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 450.04796981811523, "stage": 2, "original_qid": "GRID-0009"}
+{"qid": "GRID-0010_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.15098762512207, "stage": 1, "original_qid": "GRID-0010"}
+{"qid": "GRID-0010_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 455.7671546936035, "stage": 2, "original_qid": "GRID-0010"}
+{"qid": "GRID-0011_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.47144317626953, "stage": 1, "original_qid": "GRID-0011"}
+{"qid": "GRID-0011_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 456.53462409973145, "stage": 2, "original_qid": "GRID-0011"}
+{"qid": "GRID-0012_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.01868629455566, "stage": 1, "original_qid": "GRID-0012"}
+{"qid": "GRID-0012_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 458.05883407592773, "stage": 2, "original_qid": "GRID-0012"}
+{"qid": "GRID-0013_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.76064491271973, "stage": 1, "original_qid": "GRID-0013"}
+{"qid": "GRID-0013_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 461.06743812561035, "stage": 2, "original_qid": "GRID-0013"}
+{"qid": "GRID-0014_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 208.40978622436523, "stage": 1, "original_qid": "GRID-0014"}
+{"qid": "GRID-0014_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 461.7478847503662, "stage": 2, "original_qid": "GRID-0014"}
+{"qid": "GRID-0015_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.71367645263672, "stage": 1, "original_qid": "GRID-0015"}
+{"qid": "GRID-0015_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 457.2620391845703, "stage": 2, "original_qid": "GRID-0015"}
+{"qid": "GRID-0016_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.0925235748291, "stage": 1, "original_qid": "GRID-0016"}
+{"qid": "GRID-0016_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 458.423376083374, "stage": 2, "original_qid": "GRID-0016"}
+{"qid": "GRID-0017_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.36701583862305, "stage": 1, "original_qid": "GRID-0017"}
+{"qid": "GRID-0017_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 451.36070251464844, "stage": 2, "original_qid": "GRID-0017"}
+{"qid": "GRID-0018_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.2608470916748, "stage": 1, "original_qid": "GRID-0018"}
+{"qid": "GRID-0018_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 457.78918266296387, "stage": 2, "original_qid": "GRID-0018"}
+{"qid": "GRID-0019_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.76660537719727, "stage": 1, "original_qid": "GRID-0019"}
+{"qid": "GRID-0019_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 454.10680770874023, "stage": 2, "original_qid": "GRID-0019"}
+{"qid": "GRID-0020_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.95114135742188, "stage": 1, "original_qid": "GRID-0020"}
+{"qid": "GRID-0020_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 460.42776107788086, "stage": 2, "original_qid": "GRID-0020"}
+{"qid": "GRID-0021_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.11493492126465, "stage": 1, "original_qid": "GRID-0021"}
+{"qid": "GRID-0021_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 460.80803871154785, "stage": 2, "original_qid": "GRID-0021"}
+{"qid": "GRID-0022_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 208.29081535339355, "stage": 1, "original_qid": "GRID-0022"}
+{"qid": "GRID-0022_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 460.7527256011963, "stage": 2, "original_qid": "GRID-0022"}
+{"qid": "GRID-0023_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.6854705810547, "stage": 1, "original_qid": "GRID-0023"}
+{"qid": "GRID-0023_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 456.58016204833984, "stage": 2, "original_qid": "GRID-0023"}
+{"qid": "GRID-0024_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.52103424072266, "stage": 1, "original_qid": "GRID-0024"}
+{"qid": "GRID-0024_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 462.32128143310547, "stage": 2, "original_qid": "GRID-0024"}
+{"qid": "GRID-0025_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.8549861907959, "stage": 1, "original_qid": "GRID-0025"}
+{"qid": "GRID-0025_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 458.9550495147705, "stage": 2, "original_qid": "GRID-0025"}
+{"qid": "GRID-0026_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 208.634614944458, "stage": 1, "original_qid": "GRID-0026"}
+{"qid": "GRID-0026_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 459.8410129547119, "stage": 2, "original_qid": "GRID-0026"}
+{"qid": "GRID-0027_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.1061134338379, "stage": 1, "original_qid": "GRID-0027"}
+{"qid": "GRID-0027_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 460.6609344482422, "stage": 2, "original_qid": "GRID-0027"}
+{"qid": "GRID-0028_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.5134048461914, "stage": 1, "original_qid": "GRID-0028"}
+{"qid": "GRID-0028_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 459.94091033935547, "stage": 2, "original_qid": "GRID-0028"}
+{"qid": "GRID-0029_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.75633239746094, "stage": 1, "original_qid": "GRID-0029"}
+{"qid": "GRID-0029_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 454.52356338500977, "stage": 2, "original_qid": "GRID-0029"}
+{"qid": "GRID-0030_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 204.09536361694336, "stage": 1, "original_qid": "GRID-0030"}
+{"qid": "GRID-0030_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 454.2500972747803, "stage": 2, "original_qid": "GRID-0030"}
+{"qid": "GRID-0031_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.37343215942383, "stage": 1, "original_qid": "GRID-0031"}
+{"qid": "GRID-0031_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 450.4427909851074, "stage": 2, "original_qid": "GRID-0031"}
+{"qid": "GRID-0032_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 207.08513259887695, "stage": 1, "original_qid": "GRID-0032"}
+{"qid": "GRID-0032_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 462.571382522583, "stage": 2, "original_qid": "GRID-0032"}
+{"qid": "GRID-0033_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 206.62593841552734, "stage": 1, "original_qid": "GRID-0033"}
+{"qid": "GRID-0033_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 452.84366607666016, "stage": 2, "original_qid": "GRID-0033"}
+{"qid": "GRID-0034_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 204.58102226257324, "stage": 1, "original_qid": "GRID-0034"}
+{"qid": "GRID-0034_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 454.24389839172363, "stage": 2, "original_qid": "GRID-0034"}
+{"qid": "GRID-0035_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 204.5741081237793, "stage": 1, "original_qid": "GRID-0035"}
+{"qid": "GRID-0035_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 444.0145492553711, "stage": 2, "original_qid": "GRID-0035"}
+{"qid": "GRID-0036_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 203.6278247833252, "stage": 1, "original_qid": "GRID-0036"}
+{"qid": "GRID-0036_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 446.72083854675293, "stage": 2, "original_qid": "GRID-0036"}
+{"qid": "GRID-0037_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 201.1418342590332, "stage": 1, "original_qid": "GRID-0037"}
+{"qid": "GRID-0037_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 451.46894454956055, "stage": 2, "original_qid": "GRID-0037"}
+{"qid": "GRID-0038_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 201.90024375915527, "stage": 1, "original_qid": "GRID-0038"}
+{"qid": "GRID-0038_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 445.74570655822754, "stage": 2, "original_qid": "GRID-0038"}
+{"qid": "GRID-0039_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.0324935913086, "stage": 1, "original_qid": "GRID-0039"}
+{"qid": "GRID-0039_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 449.34582710266113, "stage": 2, "original_qid": "GRID-0039"}
+{"qid": "GRID-0040_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 199.82028007507324, "stage": 1, "original_qid": "GRID-0040"}
+{"qid": "GRID-0040_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 449.9392509460449, "stage": 2, "original_qid": "GRID-0040"}
+{"qid": "GRID-0041_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 204.70476150512695, "stage": 1, "original_qid": "GRID-0041"}
+{"qid": "GRID-0041_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 448.1687545776367, "stage": 2, "original_qid": "GRID-0041"}
+{"qid": "GRID-0042_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 201.6470432281494, "stage": 1, "original_qid": "GRID-0042"}
+{"qid": "GRID-0042_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 447.3605155944824, "stage": 2, "original_qid": "GRID-0042"}
+{"qid": "GRID-0043_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 199.7549533843994, "stage": 1, "original_qid": "GRID-0043"}
+{"qid": "GRID-0043_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 445.9195137023926, "stage": 2, "original_qid": "GRID-0043"}
+{"qid": "GRID-0044_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 201.7207145690918, "stage": 1, "original_qid": "GRID-0044"}
+{"qid": "GRID-0044_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 450.8378505706787, "stage": 2, "original_qid": "GRID-0044"}
+{"qid": "GRID-0045_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 205.52468299865723, "stage": 1, "original_qid": "GRID-0045"}
+{"qid": "GRID-0045_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 452.1212577819824, "stage": 2, "original_qid": "GRID-0045"}
+{"qid": "GRID-0046_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 202.33917236328125, "stage": 1, "original_qid": "GRID-0046"}
+{"qid": "GRID-0046_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 446.5045928955078, "stage": 2, "original_qid": "GRID-0046"}
+{"qid": "GRID-0047_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.34243774414062, "stage": 1, "original_qid": "GRID-0047"}
+{"qid": "GRID-0047_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 449.3145942687988, "stage": 2, "original_qid": "GRID-0047"}
+{"qid": "GRID-0048_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 201.49803161621094, "stage": 1, "original_qid": "GRID-0048"}
+{"qid": "GRID-0048_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 454.3464183807373, "stage": 2, "original_qid": "GRID-0048"}
+{"qid": "GRID-0049_stage1", "task": "Grid", "choice": "B", "confidence": 0, "raw_text": "B", "latency_ms": 204.61344718933105, "stage": 1, "original_qid": "GRID-0049"}
+{"qid": "GRID-0049_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 443.6051845550537, "stage": 2, "original_qid": "GRID-0049"}
+{"qid": "GRID-0050_stage1", "task": "Grid", "choice": "A", "confidence": 0, "raw_text": "A", "latency_ms": 203.4451961517334, "stage": 1, "original_qid": "GRID-0050"}
+{"qid": "GRID-0050_stage2", "task": "Grid", "choice": "Confidence: 5", "confidence": 5, "raw_text": "Confidence: 5", "latency_ms": 451.0078430175781, "stage": 2, "original_qid": "GRID-0050"}

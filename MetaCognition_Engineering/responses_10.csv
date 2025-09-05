@@ -1,0 +1,46 @@
+Question_ID,Task,Stage1_Choice,Stage1_Raw,Stage1_Latency_ms,Stage2_Confidence,Stage2_Raw,Stage2_Latency_ms
+GRID-0001,Grid,A,"A. O
+
+The grid contains more ""O"" symbols than ""X"" symbols.",923.6,5,"confidence: 5
+
+I am 100% certain that there are more ""O"" symbols than ""X"" symbols in the grid. The count of ""O"" symbols is 45, and the count of ""X"" symbols is 30. Therefore, the correct answer is ""O"".",1728.6
+GRID-0002,Grid,A,"A. O
+
+The image contains a total of 50 Os and 49 Xs. Therefore, there are more Os than Xs.",858.3,5,"confidence: 5
+
+I am very certain in my choice because I counted the number of Os and Xs in the image, and there are more Os than Xs.",985.7
+GRID-0003,Grid,B,"B. X
+
+The pattern consists of alternating rows of Xs and Os. Since the rows alternate, and the pattern starts with an X, there are more Xs than Os in the given pattern.",1114.6,5,"confidence: 5
+
+I am very certain in my choice because the pattern clearly alternates between Xs and Os, and since the pattern starts with an X, it is evident that there are more Xs than Os.",1242.3
+GRID-0004,Grid,A,"A. O
+
+The pattern consists of alternating rows of Os and Xs. By counting the Os and Xs, it is clear that there are more Os than Xs.",1001.6,5,"confidence: 5
+
+I am very certain in my choice because the pattern clearly shows that there are more Os than Xs. By counting the Os and Xs, it is evident that the Os outnumber the Xs.",1222.1
+GRID-0005,Grid,A,"A. O
+
+The image contains more ""O"" symbols than ""X"" symbols.",528.7,5,"confidence: 5
+
+I am 100% certain that there are more ""O"" symbols than ""X"" symbols in the image. The pattern is clearly visible, and by counting the symbols, it is evident that ""O"" appears more frequently.",1428.2
+GRID-0006,Grid,A,"A. O
+
+The image contains more ""O"" symbols than ""X"" symbols.",524.6,5,"confidence: 5
+
+I am 100% certain that there are more ""O"" symbols than ""X"" symbols in the image. The pattern clearly shows that the ""O"" symbols are more numerous than the ""X"" symbols.",1351.0
+GRID-0007,Grid,A,"A. O
+
+The image shows a grid with a total of 80 'O's and 72 'X's. Therefore, there are more 'O's than 'X's.",1090.4,5,"confidence: 5
+
+I am very certain in my choice because the count of 'O's and 'X's in the image is clearly visible, and it is evident that there are more 'O's than 'X's.",1247.2
+GRID-0008,Grid,A,"A. O
+
+The grid contains more ""O"" symbols than ""X"" symbols.",524.9,5,"confidence: 5
+
+I am 100% certain that there are more ""O"" symbols than ""X"" symbols in the grid. The count of ""O"" symbols is 45, and the count of ""X"" symbols is 30. Therefore, the correct answer is ""O"".",1707.3
+GRID-0009,Grid,B,"B. B
+
+The image shows a grid with two types of letters, A and B. By counting the occurrences of each letter, we can see that there are more instances of the letter B than A. Therefore, the correct answer is B.",1350.5,5,"confidence: 5
+
+I am very certain in my choice because the image clearly shows a grid with more instances of the letter B than A. The count of each letter is as follows: A appears 25 times and B appears 30 times. Therefore, the correct answer is B.",1628.6
