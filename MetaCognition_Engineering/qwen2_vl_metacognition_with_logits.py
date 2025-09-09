@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-使用Qwen2-VL-7B-Instruct模型进行元认知推理的脚本
+使用Qwen2-VL-32B-Instruct模型进行元认知推理的脚本（带logits计算）
 每道题目的Stage 1和Stage 2在同一个聊天会话中进行
 """
 
@@ -12,6 +12,7 @@ import re
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
 import torch
+import torch.nn.functional as F
 from transformers import Qwen2_5_VLForConditionalGeneration, Qwen2_5_VLProcessor
 from qwen_vl_utils import process_vision_info
 
@@ -34,9 +35,86 @@ class Qwen2VLMetacognitionInference:
         
         print("模型加载完成！")
     
+    def prepare_inputs(self, text: str, image_inputs: List, video_inputs: List):
+        """
+        准备模型输入并返回input_ids和offset
+        """
+        inputs = self.processor(
+            text=[text],
+            images=image_inputs,
+            videos=video_inputs,
+            return_tensors="pt",
+        )
+        inputs = inputs.to(self.model.device)
+        
+        # 获取input_ids和offset
+        input_ids = inputs.input_ids[0]
+        offset = len(input_ids)  # 这是生成开始的位置
+        
+        return inputs, input_ids, offset
+    
+    def get_reduction_fn(self, reduction: str):
+        """获取概率归约函数"""
+        if reduction == "mean":
+            return lambda x: sum(x) / len(x)
+        elif reduction == "sum":
+            return sum
+        elif reduction == "min":
+            return min
+        elif reduction == "max":
+            return max
+        else:
+            return lambda x: x  # 返回原始列表
+    
+    def compute_choice_probabilities(self, text: str, image_inputs: List, video_inputs: List):
+        """
+        计算选项A和B的概率（通过softmax）
+        """
+        inputs, input_ids, offset = self.prepare_inputs(text, image_inputs, video_inputs)
+        
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            logits = outputs.logits
+
+        # 获取最后一个token位置的logits（用于预测下一个token）
+        last_token_logits = logits[0, -1, :]  # 形状: [vocab_size]
+        
+        # 获取A和B token的ID
+        tokenizer = self.processor.tokenizer
+        
+        # 尝试不同的A和B token表示
+        a_tokens = ['A', 'A.', 'A)', 'A)']
+        b_tokens = ['B', 'B.', 'B)', 'B)']
+        
+        a_logits = []
+        b_logits = []
+        
+        for a_token in a_tokens:
+            a_id = tokenizer.convert_tokens_to_ids(a_token)
+            if a_id != tokenizer.unk_token_id:
+                a_logits.append(last_token_logits[a_id].item())
+        
+        for b_token in b_tokens:
+            b_id = tokenizer.convert_tokens_to_ids(b_token)
+            if b_id != tokenizer.unk_token_id:
+                b_logits.append(last_token_logits[b_id].item())
+        
+        # 计算A和B的平均logits
+        a_logit = sum(a_logits) / len(a_logits) if a_logits else -1000.0
+        b_logit = sum(b_logits) / len(b_logits) if b_logits else -1000.0
+        
+        # 将logits转换为概率（使用softmax）
+        logits_tensor = torch.tensor([a_logit, b_logit])
+        probabilities = F.softmax(logits_tensor, dim=0)
+        
+        a_prob = probabilities[0].item()
+        b_prob = probabilities[1].item()
+        
+        return {"A": a_prob, "B": b_prob}
+    
     def process_metacognition_question(self, stage1_question: Dict[str, Any], stage2_question: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """
-        处理一道题目的元认知流程
+        处理一道题目的元认知流程（带logits计算）
         Stage 1和Stage 2在同一个聊天会话中进行
         """
         print(f"处理题目: {stage1_question['original_qid']}")
@@ -64,6 +142,9 @@ class Qwen2VLMetacognitionInference:
             messages, tokenize=False, add_generation_prompt=True
         )
         image_inputs, video_inputs = process_vision_info(messages)
+        
+        # 计算Stage 1的A和B选项概率
+        stage1_choice_probs = self.compute_choice_probabilities(text, image_inputs, video_inputs)
         
         inputs = self.processor(
             text=[text],
@@ -116,6 +197,8 @@ class Qwen2VLMetacognitionInference:
         )
         image_inputs, video_inputs = process_vision_info(messages)
         
+        # Stage 2不需要计算logits
+        
         inputs = self.processor(
             text=[text],
             images=image_inputs,
@@ -154,7 +237,7 @@ class Qwen2VLMetacognitionInference:
         if match:
             stage2_confidence = int(match.group(1))
         
-        # 构建结果
+        # 构建结果（Stage 1包含A和B的概率，Stage 2不包含概率）
         stage1_result = {
             "qid": stage1_question["qid"],
             "task": stage1_question["task"],
@@ -163,7 +246,8 @@ class Qwen2VLMetacognitionInference:
             "raw_text": stage1_response,
             "latency_ms": stage1_latency,
             "stage": 1,
-            "original_qid": stage1_question["original_qid"]
+            "original_qid": stage1_question["original_qid"],
+            "probabilities": stage1_choice_probs  # 包含A和B的概率
         }
         
         stage2_result = {
@@ -175,13 +259,14 @@ class Qwen2VLMetacognitionInference:
             "latency_ms": stage2_latency,
             "stage": 2,
             "original_qid": stage2_question["original_qid"]
+            # Stage 2不包含logits
         }
         
         return stage1_result, stage2_result
     
     def process_questions_metacognition(self, questions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        按元认知流程处理题目
+        按元认知流程处理题目（带logits计算）
         每道题目的Stage 1和Stage 2在同一个聊天会话中
         不同题目之间是独立的聊天会话
         """
@@ -197,116 +282,61 @@ class Qwen2VLMetacognitionInference:
         results = []
         total_questions = len(questions_by_original)
         
-        for i, (original_qid, stage_questions) in enumerate(questions_by_original.items(), 1):
-            print(f"\n处理题目 {i}/{total_questions}: {original_qid}")
-            
-            # 获取stage1和stage2的题目
-            stage1_question = stage_questions.get("stage1")
-            stage2_question = stage_questions.get("stage2")
-            
-            if not stage1_question or not stage2_question:
-                print(f"  警告: 题目 {original_qid} 缺少stage1或stage2")
-                continue
+        for i, (original_qid, stages) in enumerate(questions_by_original.items()):
+            print(f"处理进度: {i+1}/{total_questions}")
             
             try:
-                stage1_result, stage2_result = self.process_metacognition_question(stage1_question, stage2_question)
+                stage1_question = stages.get("stage1")
+                stage2_question = stages.get("stage2")
+                
+                if not stage1_question or not stage2_question:
+                    print(f"跳过题目 {original_qid}: 缺少stage1或stage2")
+                    continue
+                
+                stage1_result, stage2_result = self.process_metacognition_question(
+                    stage1_question, stage2_question
+                )
+                
                 results.extend([stage1_result, stage2_result])
                 
             except Exception as e:
+                print(f"处理题目 {original_qid} 时出错: {e}")
                 import traceback
-                print(f"  错误: 处理题目 {original_qid} 时出错: {e}")
-                print(f"  详细错误信息: {traceback.format_exc()}")
-                # 添加错误结果
-                error_result = {
-                    "qid": f"{original_qid}_error",
-                    "task": stage1_question.get("task", "Unknown"),
-                    "choice": "",
-                    "confidence": 0,
-                    "raw_text": f"ERROR: {str(e)}",
-                    "latency_ms": 0,
-                    "stage": 0,
-                    "original_qid": original_qid
-                }
-                results.append(error_result)
+                print(f"详细错误信息: {traceback.format_exc()}")
+                continue
         
         return results
 
-def load_questions(jsonl_path: Path) -> List[Dict[str, Any]]:
-    """加载题目文件"""
-    questions = []
-    with open(jsonl_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                questions.append(json.loads(line))
-    return questions
-
-def save_results(results: List[Dict[str, Any]], output_path: Path):
-    """保存结果"""
-    with open(output_path, 'w', encoding='utf-8') as f:
-        for result in results:
-            f.write(json.dumps(result, ensure_ascii=False) + '\n')
-
 def main():
-    parser = argparse.ArgumentParser(description="使用Qwen2-VL-7B-Instruct进行元认知推理")
-    parser.add_argument("--questions", type=Path, required=True, help="题目文件路径")
-    parser.add_argument("--output", type=Path, required=True, help="输出结果文件路径")
+    parser = argparse.ArgumentParser(description="Qwen2-VL元认知推理")
+    parser.add_argument("--questions", type=str, required=True, help="题目JSONL文件路径")
+    parser.add_argument("--output", type=str, required=True, help="输出JSONL文件路径")
     parser.add_argument("--model", type=str, default="Qwen/Qwen2.5-VL-32B-Instruct", help="模型名称")
     parser.add_argument("--device", type=str, default="auto", help="设备")
-    parser.add_argument("--max_questions", type=int, help="最大处理题目数量（用于测试）")
     
     args = parser.parse_args()
     
     # 加载题目
-    print(f"加载题目文件: {args.questions}")
-    questions = load_questions(args.questions)
+    questions = []
+    with open(args.questions, 'r', encoding='utf-8') as f:
+        for line in f:
+            questions.append(json.loads(line.strip()))
     
-    if args.max_questions:
-        # 限制题目数量，按original_qid限制
-        # 先按original_qid分组，然后取前N个完整的题目
-        questions_by_original = {}
-        for question in questions:
-            original_qid = question["original_qid"]
-            if original_qid not in questions_by_original:
-                questions_by_original[original_qid] = []
-            questions_by_original[original_qid].append(question)
-        
-        # 取前N个完整的题目（包含stage1和stage2）
-        limited_questions = []
-        count = 0
-        for original_qid, q_list in questions_by_original.items():
-            if count >= args.max_questions:
-                break
-            # 检查是否有完整的stage1和stage2
-            has_stage1 = any(q["stage"] == 1 for q in q_list)
-            has_stage2 = any(q["stage"] == 2 for q in q_list)
-            if has_stage1 and has_stage2:
-                limited_questions.extend(q_list)
-                count += 1
-        
-        questions = limited_questions
-        print(f"限制处理题目数量: {count} 道题目")
-    
-    print(f"总共 {len(questions)} 个题目条目")
+    print(f"加载了 {len(questions)} 道题目")
     
     # 初始化模型
     inference = Qwen2VLMetacognitionInference(args.model, args.device)
     
     # 处理题目
-    print("开始元认知推理...")
-    start_time = time.time()
-    
     results = inference.process_questions_metacognition(questions)
     
-    total_time = time.time() - start_time
-    print(f"\n处理完成！总耗时: {total_time:.2f}秒")
-    print(f"平均每题耗时: {total_time/len(set(q['original_qid'] for q in questions)):.2f}秒")
-    
     # 保存结果
-    print(f"保存结果到: {args.output}")
-    save_results(results, args.output)
+    with open(args.output, 'w', encoding='utf-8') as f:
+        for result in results:
+            f.write(json.dumps(result, ensure_ascii=False) + '\n')
     
-    print("完成！")
+    print(f"处理完成，结果保存到: {args.output}")
+    print(f"总共处理了 {len(results)} 个结果")
 
 if __name__ == "__main__":
     main()
