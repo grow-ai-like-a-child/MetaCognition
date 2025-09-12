@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-使用Qwen2-VL-32B-Instruct模型进行元认知推理的脚本（带logits计算）
+使用Qwen2-VL-32B-Instruct模型进行元认知推理的脚本（带logits计算，保存prompt）
 每道题目的Stage 1和Stage 2在同一个聊天会话中进行
 """
 
@@ -47,24 +47,10 @@ class Qwen2VLMetacognitionInference:
         )
         inputs = inputs.to(self.model.device)
         
-        # 获取input_ids和offset
         input_ids = inputs.input_ids[0]
         offset = len(input_ids)  # 这是生成开始的位置
         
         return inputs, input_ids, offset
-    
-    def get_reduction_fn(self, reduction: str):
-        """获取概率归约函数"""
-        if reduction == "mean":
-            return lambda x: sum(x) / len(x)
-        elif reduction == "sum":
-            return sum
-        elif reduction == "min":
-            return min
-        elif reduction == "max":
-            return max
-        else:
-            return lambda x: x  # 返回原始列表
     
     def compute_choice_probabilities(self, text: str, image_inputs: List, video_inputs: List):
         """
@@ -76,39 +62,19 @@ class Qwen2VLMetacognitionInference:
             outputs = self.model(**inputs)
             logits = outputs.logits
 
-        # 获取最后一个token位置的logits（用于预测下一个token）
-        last_token_logits = logits[0, -1, :]  # 形状: [vocab_size]
+        # 获取最后一个token位置的logits
+        last_token_logits = logits[0, -1, :]
         
-        # 获取A和B token的ID
         tokenizer = self.processor.tokenizer
-        
-        # 尝试不同的A和B token表示
-        a_tokens = ['A', 'A.', 'A)', 'A)']
-        b_tokens = ['B', 'B.', 'B)', 'B)']
-        
-        a_logits = []
-        b_logits = []
-        
-        for a_token in a_tokens:
-            a_id = tokenizer.convert_tokens_to_ids(a_token)
-            if a_id != tokenizer.unk_token_id:
-                a_logits.append(last_token_logits[a_id].item())
-        
-        for b_token in b_tokens:
-            b_id = tokenizer.convert_tokens_to_ids(b_token)
-            if b_id != tokenizer.unk_token_id:
-                b_logits.append(last_token_logits[b_id].item())
-        
-        # 计算A和B的平均logits
-        a_logit = sum(a_logits) / len(a_logits) if a_logits else -1000.0
-        b_logit = sum(b_logits) / len(b_logits) if b_logits else -1000.0
-        
-        # 将logits转换为概率（使用softmax）
-        logits_tensor = torch.tensor([a_logit, b_logit])
-        probabilities = F.softmax(logits_tensor, dim=0)
-        
-        a_prob = probabilities[0].item()
-        b_prob = probabilities[1].item()
+        a_token = 'A'
+        b_token = 'B'
+        a_id = tokenizer.convert_tokens_to_ids(a_token)
+        b_id = tokenizer.convert_tokens_to_ids(b_token)
+
+        probs = F.softmax(last_token_logits, dim=-1)
+
+        a_prob = probs[a_id].item() if a_id != tokenizer.unk_token_id else 0.0
+        b_prob = probs[b_id].item() if b_id != tokenizer.unk_token_id else 0.0
         
         return {"A": a_prob, "B": b_prob}
     
@@ -119,42 +85,30 @@ class Qwen2VLMetacognitionInference:
         """
         print(f"处理题目: {stage1_question['original_qid']}")
         
-        # 构建完整的对话历史
+        # 构建对话历史
         messages = [
             {
                 "role": "user",
                 "content": [
-                    {
-                        "type": "image",
-                        "image": f"file://{stage1_question['image_path']}",
-                    },
+                    {"type": "image", "image": f"file://{stage1_question['image_path']}"},
                     {"type": "text", "text": stage1_question["prompt"]},
                 ],
             }
         ]
         
-        # 第一阶段：处理Stage 1
+        # Stage 1
         print(f"  - Stage 1: {stage1_question['qid']}")
         start_time = time.time()
         
-        # 准备Stage 1输入
-        text = self.processor.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
+        text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        stage1_prompt = text
         image_inputs, video_inputs = process_vision_info(messages)
         
-        # 计算Stage 1的A和B选项概率
         stage1_choice_probs = self.compute_choice_probabilities(text, image_inputs, video_inputs)
         
-        inputs = self.processor(
-            text=[text],
-            images=image_inputs,
-            videos=video_inputs,
-            return_tensors="pt",
-        )
+        inputs = self.processor(text=[text], images=image_inputs, videos=video_inputs, return_tensors="pt")
         inputs = inputs.to(self.model.device)
         
-        # 生成Stage 1回答
         with torch.no_grad():
             generated_ids = self.model.generate(
                 **inputs, 
@@ -163,51 +117,25 @@ class Qwen2VLMetacognitionInference:
                 temperature=0.0
             )
         
-        # 解码Stage 1回答
-        generated_ids_trimmed = [
-            out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
-        ]
-        stage1_response = self.processor.batch_decode(
-            generated_ids_trimmed, 
-            skip_special_tokens=True, 
-            clean_up_tokenization_spaces=False
-        )[0].strip()
-        
+        generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
+        stage1_response = self.processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0].strip()
         stage1_latency = (time.time() - start_time) * 1000
         
-        # 将Stage 1的回答添加到对话历史
-        messages.append({
-            "role": "assistant",
-            "content": stage1_response
-        })
+        messages.append({"role": "assistant", "content": stage1_response})
         
-        # 第二阶段：处理Stage 2（基于Stage 1的回答）
+        # Stage 2
         print(f"  - Stage 2: {stage2_question['qid']}")
         start_time = time.time()
         
-        # 添加Stage 2的问题到对话历史
-        messages.append({
-            "role": "user",
-            "content": stage2_question["prompt"]
-        })
+        messages.append({"role": "user", "content": stage2_question["prompt"]})
         
-        # 准备Stage 2输入
-        text = self.processor.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
+        text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        stage2_prompt = text
         image_inputs, video_inputs = process_vision_info(messages)
         
-        # Stage 2不需要计算logits
-        
-        inputs = self.processor(
-            text=[text],
-            images=image_inputs,
-            videos=video_inputs,
-            return_tensors="pt",
-        )
+        inputs = self.processor(text=[text], images=image_inputs, videos=video_inputs, return_tensors="pt")
         inputs = inputs.to(self.model.device)
         
-        # 生成Stage 2回答
         with torch.no_grad():
             generated_ids = self.model.generate(
                 **inputs, 
@@ -216,28 +144,17 @@ class Qwen2VLMetacognitionInference:
                 temperature=0.0
             )
         
-        # 解码Stage 2回答
-        generated_ids_trimmed = [
-            out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
-        ]
-        stage2_response = self.processor.batch_decode(
-            generated_ids_trimmed, 
-            skip_special_tokens=True, 
-            clean_up_tokenization_spaces=False
-        )[0].strip()
-        
+        generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
+        stage2_response = self.processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0].strip()
         stage2_latency = (time.time() - start_time) * 1000
         
-        # 提取置信度
         stage1_confidence = 0
         stage2_confidence = 0
-        
-        # 从stage2响应中提取置信度
         match = re.search(r'confidence:\s*(\d+)', stage2_response, re.IGNORECASE)
         if match:
             stage2_confidence = int(match.group(1))
         
-        # 构建结果（Stage 1包含A和B的概率，Stage 2不包含概率）
+        # 构建结果
         stage1_result = {
             "qid": stage1_question["qid"],
             "task": stage1_question["task"],
@@ -247,7 +164,8 @@ class Qwen2VLMetacognitionInference:
             "latency_ms": stage1_latency,
             "stage": 1,
             "original_qid": stage1_question["original_qid"],
-            "probabilities": stage1_choice_probs  # 包含A和B的概率
+            "probabilities": stage1_choice_probs,
+            "prompt": stage1_prompt
         }
         
         stage2_result = {
@@ -258,8 +176,8 @@ class Qwen2VLMetacognitionInference:
             "raw_text": stage2_response,
             "latency_ms": stage2_latency,
             "stage": 2,
-            "original_qid": stage2_question["original_qid"]
-            # Stage 2不包含logits
+            "original_qid": stage2_question["original_qid"],
+            "prompt": stage2_prompt
         }
         
         return stage1_result, stage2_result
@@ -268,9 +186,7 @@ class Qwen2VLMetacognitionInference:
         """
         按元认知流程处理题目（带logits计算）
         每道题目的Stage 1和Stage 2在同一个聊天会话中
-        不同题目之间是独立的聊天会话
         """
-        # 按original_qid分组
         questions_by_original = {}
         for question in questions:
             original_qid = question["original_qid"]
@@ -293,10 +209,7 @@ class Qwen2VLMetacognitionInference:
                     print(f"跳过题目 {original_qid}: 缺少stage1或stage2")
                     continue
                 
-                stage1_result, stage2_result = self.process_metacognition_question(
-                    stage1_question, stage2_question
-                )
-                
+                stage1_result, stage2_result = self.process_metacognition_question(stage1_question, stage2_question)
                 results.extend([stage1_result, stage2_result])
                 
             except Exception as e:
@@ -316,21 +229,16 @@ def main():
     
     args = parser.parse_args()
     
-    # 加载题目
     questions = []
     with open(args.questions, 'r', encoding='utf-8') as f:
         for line in f:
             questions.append(json.loads(line.strip()))
     
-    print(f"加载了 {len(questions)} 道题目")
+    print(f"Loaded {len(questions)} 道题目")
     
-    # 初始化模型
     inference = Qwen2VLMetacognitionInference(args.model, args.device)
-    
-    # 处理题目
     results = inference.process_questions_metacognition(questions)
     
-    # 保存结果
     with open(args.output, 'w', encoding='utf-8') as f:
         for result in results:
             f.write(json.dumps(result, ensure_ascii=False) + '\n')

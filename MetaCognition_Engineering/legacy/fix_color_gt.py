@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-修正Color任务中的错误标注
+修正Colortask中的错误标注
 根据layout和brighter_side计算正确的gt标签
 
 映射规则：
@@ -41,14 +41,14 @@ def fix_color_annotations(input_file, output_file):
     
     Args:
         input_file: 输入JSON文件路径
-        output_file: 输出JSON文件路径
+        output_file: Output JSON file path
     """
     print(f"正在读取文件: {input_file}")
     
     with open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    print(f"总共有 {len(data)} 个题目")
+    print(f"Total of {len(data)} 个题目")
     
     # 统计信息
     total_color = 0
@@ -104,9 +104,9 @@ def fix_color_annotations(input_file, output_file):
 
 def analyze_color_distribution(input_file):
     """
-    分析Color任务的布局和标注分布
+    分析Colortask的布局和标注分布
     """
-    print(f"\n正在分析Color任务分布...")
+    print(f"\n正在分析Colortask分布...")
     
     with open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)

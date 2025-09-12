@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Grid（XO 网格）任务 · 新难度梯度版（修复：形状中英文别名统一）
+Grid（XO 网格）task · 新难度梯度版（修复：形状中英文别名统一）
 - 支持 shape 输入为中文（方形/圆形/三角形/菱形）或英文（Square/Circle/Triangle/Diamond，大小写均可），
   内部统一规范为中文以供渲染；文件名仍输出英文 slug，便于跨平台与检索。
 - 统一入口：generate(params, out_dir) -> image_path
@@ -602,7 +602,7 @@ def generate_all(
 # =========================
 
 def parse_args():
-    ap = argparse.ArgumentParser(description="Grid（XO 网格）任务生成器 · 新难度梯度版")
+    ap = argparse.ArgumentParser(description="Grid（XO 网格）task生成器 · 新难度梯度版")
     ap.add_argument("--output_dir", type=str, default="stimuli/grid_levels")
     ap.add_argument("--log_csv", type=str, default="logs/grid_levels.csv")
     ap.add_argument("--grid_size", type=int, default=10)
