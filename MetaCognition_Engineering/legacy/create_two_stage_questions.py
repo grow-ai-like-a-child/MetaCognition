@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 创建两阶段提问的问题文件
-第一阶段：实验任务
+第一阶段：实验task
 第二阶段：置信度评估
 """
 
@@ -27,7 +27,7 @@ def create_two_stage_questions(input_file, output_file):
     two_stage_questions = []
     
     for i, q in enumerate(questions):
-        # 第一阶段：实验任务（不包含置信度要求）
+        # 第一阶段：实验task（不包含置信度要求）
         stage1_prompt = create_stage1_prompt(q)
         
         # 第二阶段：置信度评估
@@ -81,13 +81,13 @@ def create_two_stage_questions(input_file, output_file):
     print(f"总计: {len(two_stage_questions)}")
 
 def create_stage1_prompt(q):
-    """创建第一阶段的提示（实验任务）"""
+    """创建第一阶段的提示（实验task）"""
     task = q['task']
     
     if task == "Grid":
         # 从原始prompt中提取符号信息
         prompt = q['prompt']
-        # 移除置信度要求，只保留实验任务
+        # 移除置信度要求，只保留实验task
         if "Answer with A or B, then on a new line write 'confidence: N' (1-5)." in prompt:
             prompt = prompt.replace("Answer with A or B, then on a new line write 'confidence: N' (1-5).", "Answer with A or B.")
         return prompt

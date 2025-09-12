@@ -35,13 +35,13 @@ def validate_questions_file(file_path: str):
     print(f"  第一阶段: {stage1_count}")
     print(f"  第二阶段: {stage2_count}")
     
-    # 检查任务类型分布
+    # 检查task类型分布
     task_counts = {}
     for q in questions:
         task = q.get('task', 'Unknown')
         task_counts[task] = task_counts.get(task, 0) + 1
     
-    print(f"📊 任务类型分布:")
+    print(f"📊 task类型分布:")
     for task, count in task_counts.items():
         print(f"  {task}: {count}")
     
@@ -82,13 +82,13 @@ def validate_responses_file(file_path: str):
     print(f"  第一阶段: {stage1_count}")
     print(f"  第二阶段: {stage2_count}")
     
-    # 检查置信度分布
+    # 检查Confidence distribution
     confidences = [r.get('confidence', 0) for r in responses]
     conf_dist = {}
     for conf in confidences:
         conf_dist[conf] = conf_dist.get(conf, 0) + 1
     
-    print(f"📊 置信度分布:")
+    print(f"📊 Confidence distribution:")
     for conf in sorted(conf_dist.keys()):
         print(f"  {conf}: {conf_dist[conf]}")
     
@@ -127,13 +127,13 @@ def validate_eval_file(file_path: str):
     for col in rows[0].keys():
         print(f"  {col}")
     
-    # 检查任务类型分布
+    # 检查task类型分布
     task_counts = {}
     for row in rows:
         task = row.get('task', 'Unknown')
         task_counts[task] = task_counts.get(task, 0) + 1
     
-    print(f"\n📊 任务类型分布:")
+    print(f"\n📊 task类型分布:")
     for task, count in task_counts.items():
         print(f"  {task}: {count}")
     

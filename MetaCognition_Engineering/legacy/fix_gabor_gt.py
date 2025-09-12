@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-修正Gabor任务中的错误标注
+修正Gabortask中的错误标注
 根据theta_deg角度计算正确的gt标签
 
 角度定义：
@@ -14,7 +14,7 @@ import math
 
 def calculate_gabor_gt(theta_deg):
     """
-    根据角度计算Gabor任务的正确答案
+    根据角度计算Gabortask的正确答案
     
     Args:
         theta_deg: 条纹角度（0-360度）
@@ -41,14 +41,14 @@ def fix_gabor_annotations(input_file, output_file):
     
     Args:
         input_file: 输入JSON文件路径
-        output_file: 输出JSON文件路径
+        output_file: Output JSON file path
     """
     print(f"正在读取文件: {input_file}")
     
     with open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    print(f"总共有 {len(data)} 个题目")
+    print(f"Total of {len(data)} 个题目")
     
     # 统计信息
     total_gabor = 0

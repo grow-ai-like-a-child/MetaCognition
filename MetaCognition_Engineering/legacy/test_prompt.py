@@ -42,7 +42,7 @@ def test_prompts():
         print(f"Prompt: {col_538_stage2.get('prompt', 'N/A')}")
         print(f"Stage: {col_538_stage2.get('stage', 'N/A')}")
     
-    # 测试Grid任务
+    # 测试Gridtask
     grid_1_stage1 = None
     grid_1_stage2 = None
     

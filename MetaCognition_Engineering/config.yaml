@@ -1,0 +1,78 @@
+# MetaCognition Engineering Project Configuration
+
+# Model Configuration
+models:
+  qwen7b:
+    name: "Qwen/Qwen2.5-VL-7B-Instruct"
+    memory_requirement: "8GB"
+    batch_size: 100
+    device: "auto"
+  
+  qwen32b:
+    name: "Qwen/Qwen2.5-VL-32B-Instruct"
+    memory_requirement: "24GB"
+    batch_size: 50
+    device: "auto"
+
+# Data Configuration
+data:
+  input_catalog: "data/raw/catalog_2688_newspec_correctly_fixed.json"
+  ground_truth: "data/raw/ground_truth.json"
+  questions_file: "data/processed/questions_two_stage_concise.jsonl"
+  images_dir: "cache/images"
+  
+  # Task Types
+  tasks:
+    - name: "Grid"
+      description: "Grid counting task"
+      generator: "grid.py"
+    
+    - name: "Gabor"
+      description: "Texture recognition task"
+      generator: "gabor.py"
+    
+    - name: "Color"
+      description: "Color brightness task"
+      generator: "color_shading.py"
+
+# Experiment Configuration
+experiment:
+  # Batch Processing Configuration
+  batch_processing:
+    enabled: true
+    batch_size: 100
+    save_interval: 100
+  
+  # Output Configuration
+  output:
+    results_dir: "data/results"
+    analysis_dir: "analysis_plots"
+    log_level: "INFO"
+  
+  # Monitoring Configuration
+  monitoring:
+    progress_check_interval: 30  # seconds
+    memory_warning_threshold: 0.9  # 90%
+
+# Analysis Configuration
+analysis:
+  # Confidence Levels
+  confidence_levels: [1, 2, 3, 4, 5]
+  
+  # Statistical Metrics
+  metrics:
+    - "accuracy"
+    - "confidence_distribution"
+    - "latency"
+    - "task_performance"
+  
+  # Output Formats
+  output_formats: ["json", "csv", "png"]
+
+# Path Configuration
+paths:
+  src: "src"
+  data: "data"
+  scripts: "scripts"
+  docs: "docs"
+  cache: "cache"

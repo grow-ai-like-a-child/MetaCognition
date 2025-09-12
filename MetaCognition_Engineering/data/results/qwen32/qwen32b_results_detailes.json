@@ -1,0 +1,304 @@
+{
+  "overall_accuracy": 57.180059523809526,
+  "total_questions": 2688,
+  "correct_answers": 1537,
+  "task_breakdown": {
+    "Grid": {
+      "accuracy": 94.30803571428571,
+      "correct": 845,
+      "total": 896
+    },
+    "Color": {
+      "accuracy": 57.14285714285714,
+      "correct": 512,
+      "total": 896
+    },
+    "Gabor": {
+      "accuracy": 20.089285714285715,
+      "correct": 180,
+      "total": 896
+    }
+  },
+  "sample_results": [
+    {
+      "qid": "GRID-0001_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "A",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.2689414322376251,
+        "B": 0.7310585975646973
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0002_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.622459352016449,
+        "B": 0.3775406777858734
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0003_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "B",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.11920291185379028,
+        "B": 0.8807970285415649
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0004_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "B",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.09534946084022522,
+        "B": 0.9046505093574524
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0005_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.7310585975646973,
+        "B": 0.2689414322376251
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0006_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "A",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.4378235340118408,
+        "B": 0.562176525592804
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0007_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "B",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.22270014882087708,
+        "B": 0.7772998809814453
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0008_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "B",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.22270014882087708,
+        "B": 0.7772998809814453
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0009_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "A",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.3208213150501251,
+        "B": 0.6791787147521973
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0010_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.9046505093574524,
+        "B": 0.09534946084022522
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0011_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "B",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.8519527316093445,
+        "B": 0.14804719388484955
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0012_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.562176525592804,
+        "B": 0.4378235340118408
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0013_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.9626730680465698,
+        "B": 0.037326883524656296
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0014_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "B",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0015_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.9241418242454529,
+        "B": 0.07585818320512772
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0016_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.8175744414329529,
+        "B": 0.18242551386356354
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0017_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "B",
+      "is_correct": false,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.7772998809814453,
+        "B": 0.22270014882087708
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0018_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.562176525592804,
+        "B": 0.4378235340118408
+      },
+      "model_response": "A",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0019_stage1",
+      "task_type": "Grid",
+      "model_choice": "B",
+      "correct_choice": "B",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.3208213150501251,
+        "B": 0.6791787147521973
+      },
+      "model_response": "B",
+      "correct_response": ""
+    },
+    {
+      "qid": "GRID-0020_stage1",
+      "task_type": "Grid",
+      "model_choice": "A",
+      "correct_choice": "A",
+      "is_correct": true,
+      "confidence": 5,
+      "probabilities": {
+        "A": 0.9241418242454529,
+        "B": 0.07585818320512772
+      },
+      "model_response": "A",
+      "correct_response": ""
+    }
+  ]
+}
