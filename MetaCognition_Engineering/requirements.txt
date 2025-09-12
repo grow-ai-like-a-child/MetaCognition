@@ -1,21 +1,34 @@
-# Two-Stage Questioning Cognitive Experiment System Dependencies
+# MetaCognition Engineering Project Dependencies
 
-# Core Dependencies
-numpy>=1.21.0
-pillow>=8.3.0
-matplotlib>=3.4.0
+# Core Deep Learning Framework
+torch>=2.0.0
+transformers>=4.35.0
+accelerate>=0.20.0
 
-# Image Processing
+# Vision Processing
+Pillow>=9.0.0
 opencv-python>=4.5.0
-scikit-image>=0.18.0
+numpy>=1.21.0
 
 # Data Processing
 pandas>=1.3.0
+scipy>=1.7.0
 
-# Optional: OpenAI API Support
-# openai>=1.0.0
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
 
-# Development Dependencies (Optional)
-# pytest>=6.0.0
-# black>=21.0.0
-# flake8>=3.9.0
+# Image Generation (Gabor, Grid, Color)
+scikit-image>=0.19.0
+
+# Other Tools
+tqdm>=4.60.0
+argparse
+json5>=0.9.0
+
+# Optional: Jupyter Support
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Optional: GPU Monitoring
+nvidia-ml-py3>=7.352.0

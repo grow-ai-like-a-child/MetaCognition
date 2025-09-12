@@ -9,16 +9,16 @@
   collect — 解析模型输出并与题目表/GT 合并，导出 eval.csv
 
 要求：
-  generators/
-    ├─ grid_levels.py         # 你提供的 Grid（XO 网格）新难度梯度版
-    ├─ gabor.py               # 你提供的 Gabor 新难度梯度版
-    └─ color_shading.py       # 你提供的 Color（明暗）模块
+  src/generators/
+    ├─ grid.py               # Grid（XO 网格）task生成器
+    ├─ gabor.py              # Gabor 纹理task生成器
+    └─ color_shading.py      # Color（明暗）task生成器
 
-用法（PowerShell 示例）：
-  python .\catalog_runner_two_stage.py gen     --catalog .\catalog_2688_newspec.json --imgroot .\cache\images
-  python .\catalog_runner_two_stage.py pack    --catalog .\catalog_2688_newspec.json --imgroot .\cache\images --out .\questions_two_stage.jsonl
-  python .\catalog_runner_two_stage.py feed    --pack .\questions_two_stage.jsonl --out .\responses_two_stage.jsonl --engine mock --workers 8
-  python .\catalog_runner_two_stage.py collect --resp .\responses_two_stage.jsonl --catalog .\catalog_2688_newspec.json --out .\eval_two_stage.csv
+用法示例：
+  python src/experiments/full_pipeline.py gen     --catalog data/raw/catalog_2688_newspec_correctly_fixed.json --imgroot cache/images
+  python src/experiments/full_pipeline.py pack    --catalog data/raw/catalog_2688_newspec_correctly_fixed.json --imgroot cache/images --out data/processed/questions_two_stage.jsonl
+  python src/experiments/full_pipeline.py feed    --pack data/processed/questions_two_stage.jsonl --out data/results/responses_two_stage.jsonl --engine mock --workers 8
+  python src/experiments/full_pipeline.py collect --resp data/results/responses_two_stage.jsonl --catalog data/raw/catalog_2688_newspec_correctly_fixed.json --out data/results/eval_two_stage.csv
 
 可选：--engine openai 需要 openai>=1.0.0 且设置环境变量 OPENAI_API_KEY。
 """
@@ -30,18 +30,50 @@ from typing import Dict, Any, List, Tuple
 # -------------------------
 # 安全导入你的三套生成器
 # -------------------------
+import sys
+from pathlib import Path
+
+# 添加src目录到Python路径
+current_dir = Path(__file__).parent
+src_dir = current_dir.parent
+sys.path.insert(0, str(src_dir))
+
 try:
     from generators import grid as grid
 except Exception:
-    import grid as grid  # 若在同级目录
+    try:
+        import grid as grid  # 若在同级目录
+    except Exception:
+        # 如果都失败，尝试从相对路径导入
+        import importlib.util
+        grid_path = src_dir / "generators" / "grid.py"
+        spec = importlib.util.spec_from_file_location("grid", grid_path)
+        grid = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(grid)
+
 try:
     from generators import gabor as gabor
 except Exception:
-    import gabor as gabor
+    try:
+        import gabor as gabor
+    except Exception:
+        import importlib.util
+        gabor_path = src_dir / "generators" / "gabor.py"
+        spec = importlib.util.spec_from_file_location("gabor", gabor_path)
+        gabor = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gabor)
+
 try:
     from generators import color_shading as color_mod
 except Exception:
-    import color_shading as color_mod
+    try:
+        import color_shading as color_mod
+    except Exception:
+        import importlib.util
+        color_path = src_dir / "generators" / "color_shading.py"
+        spec = importlib.util.spec_from_file_location("color_shading", color_path)
+        color_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(color_mod)
 
 GEN_MAP = {
     "Grid": grid,
@@ -122,7 +154,7 @@ def cmd_gen(catalog: Path, imgroot: Path, only_task: str | None = None) -> None:
 # -------------------------
 
 def prompt_for_stage1(item: Dict[str,Any]) -> str:
-    """第一阶段：实验任务（不包含置信度要求）"""
+    """第一阶段：实验task（不包含置信度要求）"""
     task = item["task"]
     if task == "Grid":
         # 目录里 derived 已给 symA/symB
@@ -222,7 +254,7 @@ def cmd_pack(catalog: Path, imgroot: Path, out_jsonl: Path) -> None:
                 ipath = str(new_path.as_posix())
         
         # 创建两个阶段的问题
-        # 第一阶段：实验任务
+        # 第一阶段：实验task
         stage1_prompt = prompt_for_stage1(it)
         qrows.append({
             "qid": f"{it['qid']}_stage1",
@@ -257,7 +289,7 @@ def cmd_pack(catalog: Path, imgroot: Path, out_jsonl: Path) -> None:
 # -------------------------
 
 def mock_answer_stage1(item: Dict[str,Any]) -> Tuple[str,int]:
-    """第一阶段：离线 mock 生成实验任务答案"""
+    """第一阶段：离线 mock 生成实验task答案"""
     rng = random.Random(int(hashlib.md5(item["qid"].encode()).hexdigest(), 16))
     ctx = item.get("context", {})
     d = ctx.get("derived", {})
@@ -400,7 +432,7 @@ def cmd_collect(resp_jsonl: Path, catalog: Path, out_csv: Path) -> None:
             "stage2_latency_ms": stage2_resp.get("latency_ms", 0)
         }
         
-        # 添加任务特定字段
+        # 添加task特定字段
         if task == "Grid":
             eval_row.update({
                 "grid_level": catalog_item.get("params", {}).get("grid_level", ""),
@@ -421,7 +453,7 @@ def cmd_collect(resp_jsonl: Path, catalog: Path, out_csv: Path) -> None:
                 "word_pair_id": catalog_item.get("params", {}).get("word_pair_id", "")
             })
         
-        # 为所有任务添加通用字段（避免字段缺失错误）
+        # 为所有task添加通用字段（避免字段缺失错误）
         eval_row.update({
             "grid_level": eval_row.get("grid_level", ""),
             "shape": eval_row.get("shape", ""),
@@ -494,7 +526,7 @@ def main():
     gen_parser = subparsers.add_parser("gen", help="生成图片")
     gen_parser.add_argument("--catalog", type=Path, required=True, help="题目表路径")
     gen_parser.add_argument("--imgroot", type=Path, required=True, help="图片输出根目录")
-    gen_parser.add_argument("--only-task", type=str, help="只生成特定任务类型")
+    gen_parser.add_argument("--only-task", type=str, help="只生成特定task类型")
     
     # pack 命令
     pack_parser = subparsers.add_parser("pack", help="生成两阶段问题")

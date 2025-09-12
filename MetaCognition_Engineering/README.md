@@ -1,197 +1,180 @@
-# Two-Stage Questioning Cognitive Experiment System
+# MetaCognition Engineering
 
-## 🎯 Project Overview
+A research project for testing the performance of multimodal large language models (Qwen2.5-VL) on metacognitive reasoning tasks.
 
-This is a cognitive experiment system that supports two-stage questioning, designed to study the performance and confidence assessment of humans and AI models in visual perception tasks. The system includes three types of cognitive tasks: grid symbol judgment, Gabor stripe orientation judgment, and color brightness difference judgment.
+## 📋 Project Overview
 
-## ✨ Key Features
+This project evaluates Qwen2.5-VL models' metacognitive reasoning capabilities through three visual tasks (Grid, Gabor, Color), including:
+- **Task Execution Ability**: Model's understanding and answering of visual tasks
+- **Metacognitive Ability**: Model's confidence assessment of its own answers
+- **Two-stage Reasoning**: Answer questions first, then assess confidence
 
-- **Two-Stage Questioning Design**: Complete experimental tasks first, then assess confidence
-- **Multi-Task Support**: Grid, Gabor, and Color three cognitive tasks
-- **Automated Workflow**: Complete pipeline from image generation to result evaluation
-- **Flexible Configuration**: Support for both Mock and OpenAI API modes
-- **Data Integrity**: Automatic generation, cache management, and result validation
-
-## 🏗️ System Architecture
+## 🏗️ Project Structure
 
 ```
-neweng/
-├── cache/                                    # Image cache directory
-│   └── images/
-│       ├── Grid/                            # Grid task images
-│       ├── Gabor/                           # Gabor task images
-│       └── Color/                           # Color task images
-├── generators/                               # Task generators
-│   ├── grid.py                              # Grid task generator
-│   ├── gabor.py                             # Gabor task generator
-│   └── color_shading.py                     # Color task generator
-├── catalog_runner_two_stage.py              # Main runner
-└── catalog_2688_newspec_correctly_fixed.json # Task configuration data
+MetaCognition_Engineering/
+├── src/                          # Source code
+│   ├── generators/               # Image generators
+│   │   ├── grid.py              # Grid counting task generator
+│   │   ├── gabor.py             # Texture recognition task generator
+│   │   └── color_shading.py     # Color brightness task generator
+│   ├── analysis/                 # Analysis scripts
+│   │   ├── accuracy_analysis.py # Accuracy analysis
+│   │   └── comparison_analysis.py # Comparison analysis
+│   └── experiments/              # Experiment scripts
+│       ├── full_pipeline.py     # Complete experiment pipeline
+│       └── model_loading_test.py # Model loading test
+├── data/                         # Data files
+│   ├── raw/                     # Raw data
+│   │   ├── catalog_2688_newspec_correctly_fixed.json
+│   │   └── ground_truth.json
+│   ├── processed/               # Processed data
+│   │   ├── questions_two_stage_concise.jsonl
+│   │   └── questions_two_stage_enhanced.jsonl
+│   └── results/                 # Experiment results
+│       ├── qwen7/              # Qwen2.5-VL-7B results
+│       └── qwen32/             # Qwen2.5-VL-32B results
+├── scripts/                      # Run scripts
+│   ├── run_metacognition_experiments.sh
+│   └── monitor_progress.sh
+├── docs/                         # Documentation
+├── requirements.txt              # Dependencies
+└── README.md                    # Project description
 ```
 
 ## 🚀 Quick Start
 
-### Requirements
-
-- Python 3.8+
-- Required Python packages (see requirements.txt)
-- Optional: OpenAI API key (for real model testing)
-
-### Install Dependencies
+### 1. Environment Setup
 
 ```bash
+# Clone the project
+git clone <repository-url>
+cd MetaCognition_Engineering
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Ensure sufficient GPU memory
+# 7B model requires ~8GB VRAM
+# 32B model requires ~24GB VRAM
 ```
 
-### Basic Usage Workflow
-
-1. **Generate Experimental Images**
-```bash
-python catalog_runner_two_stage.py gen --catalog catalog_2688_newspec_correctly_fixed.json --imgroot cache/images
-```
-
-2. **Create Two-Stage Questions**
-```bash
-python catalog_runner_two_stage.py pack --catalog catalog_2688_newspec_correctly_fixed.json --imgroot cache/images --out questions_two_stage.jsonl
-```
-
-3. **Call Model (Mock Mode)**
-```bash
-python catalog_runner_two_stage.py feed --pack questions_two_stage.jsonl --out responses_two_stage.jsonl --engine mock --workers 8
-```
-
-4. **Collect Evaluation Results**
-```bash
-python catalog_runner_two_stage.py collect --resp responses_two_stage.jsonl --catalog catalog_2688_newspec_correctly_fixed.json --out eval_two_stage.csv
-```
-
-## 📊 Task Type Details
-
-### Grid Task
-- **Objective**: Determine which symbol appears more frequently in the grid
-- **Parameters**: Grid level, shape, symbol set, color pair
-- **Output**: A or B choice, confidence 1-5
-
-### Gabor Task
-- **Objective**: Determine whether stripe orientation is closer to vertical or horizontal
-- **Parameters**: Gabor level, frequency, position
-- **Output**: A (vertical) or B (horizontal), confidence 1-5
-
-### Color Task
-- **Objective**: Determine which side is brighter
-- **Parameters**: Brightness difference, layout, font style
-- **Output**: A or B choice, confidence 1-5
-
-## 🔧 Two-Stage Questioning Design
-
-### Stage 1: Experimental Task
-- Pure cognitive task without confidence requirements
-- Model focuses on the task itself, avoiding interference
-- Generates A/B choice answers
-
-### Stage 2: Confidence Assessment
-- Assess confidence based on first stage answers
-- 1-5 level confidence rating
-- More natural cognitive process
-
-## 📁 Output File Description
-
-### questions_two_stage.jsonl
-- Contains 5,376 questions (2,688 original questions × 2 stages)
-- Each question has a stage field identifying the stage
-- Connected through original_qid field
-
-### responses_two_stage.jsonl
-- Model responses to each question
-- Contains choice, confidence, latency time, and other information
-
-### eval_two_stage.csv
-- Comprehensive evaluation results
-- Contains complete information from both stages
-- Task-specific parameters and correctness judgment
-
-## ⚙️ Advanced Configuration
-
-### Mock Mode
-- Offline testing, no API calls required
-- Configurable random seeds and latency simulation
-- Suitable for development and debugging
-
-### OpenAI Mode
-- Real model API calls
-- Requires OPENAI_API_KEY environment variable
-- Supports concurrent processing
-
-### Custom Parameters
-- Adjustable concurrency (--workers)
-- Support for specific task type filtering (--only-task)
-- Flexible input/output path configuration
-
-## 🔍 Data Validation
-
-The system includes built-in validation mechanisms to ensure:
-- Correct question count (5,376)
-- Balanced stage distribution (2,688 each)
-- File format consistency
-- Data integrity checks
-
-## 📈 Experimental Workflow Example
+### 2. Generate Data
 
 ```bash
-# Complete experimental workflow
-cd "E:\Grow-AI\Meta cognition\Cog\neweng"
+# Generate image data
+python src/experiments/full_pipeline.py gen --catalog data/raw/catalog_2688_newspec_correctly_fixed.json --imgroot cache/images
 
-# 1. Generate images
-python catalog_runner_two_stage.py gen --catalog catalog_2688_newspec_correctly_fixed.json --imgroot cache/images
-
-# 2. Create questions
-python catalog_runner_two_stage.py pack --catalog catalog_2688_newspec_correctly_fixed.json --imgroot cache/images --out questions_two_stage.jsonl
-
-# 3. Call model
-python catalog_runner_two_stage.py feed --pack questions_two_stage.jsonl --out responses_two_stage.jsonl --engine mock --workers 8
-
-# 4. Collect results
-python catalog_runner_two_stage.py collect --resp responses_two_stage.jsonl --catalog catalog_2688_newspec_correctly_fixed.json --out eval_two_stage.csv
+# Generate question data
+python src/experiments/full_pipeline.py pack --catalog data/raw/catalog_2688_newspec_correctly_fixed.json --imgroot cache/images --out data/processed/questions_two_stage_concise.jsonl
 ```
 
-## 🎯 Application Scenarios
+### 3. Run Experiments
 
-- **Cognitive Science Research**: Study visual perception abilities of humans and AI
-- **Model Evaluation**: Assess AI model performance in cognitive tasks
-- **Confidence Calibration**: Study model prediction reliability
-- **Educational Research**: Understand cognitive processes in learning
+```bash
+# Run 7B model experiment
+cd data/results/qwen7
+python qwen2_vl_metacognition_multi_model.py --model Qwen/Qwen2.5-VL-7B-Instruct --questions ../../processed/questions_two_stage_concise.jsonl --output qwen2.5-vl-7b_results.jsonl
 
-## 🔬 Technical Features
+# Run 32B model experiment
+cd data/results/qwen32
+python qwen2_vl_metacognition_multi_model.py --model Qwen/Qwen2.5-VL-32B-Instruct --questions ../../processed/questions_two_stage_concise.jsonl --output qwen2.5-vl-32b_results.jsonl
+```
 
-- **Modular Design**: Easy to extend new task types
-- **Cache Mechanism**: Avoid repeated image generation
-- **Error Handling**: Robust error handling and logging
-- **Performance Optimization**: Support for concurrent processing and batch operations
+### 4. Analyze Results
 
-## 📝 Important Notes
+```bash
+# Analyze accuracy
+python src/analysis/accuracy_analysis.py --results qwen2.5-vl-7b_results.jsonl --output analysis.csv
 
-1. **Image Paths**: Ensure imgroot directory has corresponding task subdirectories
-2. **API Keys**: OpenAI engine requires environment variable setup
-3. **File Association**: Two-stage questions are linked through original_qid field
-4. **Evaluation Logic**: Correctness judgment is based on first stage answers
+# Detailed comparison analysis
+python src/analysis/comparison_analysis.py --results qwen2.5-vl-7b_results.jsonl --output comparison.json
+```
+
+## 📊 Experimental Results
+
+### Qwen2.5-VL-7B Performance
+- **Overall Accuracy**: 57.07% (1,534/2,688)
+- **Grid Task**: 94.31% (845/896) ✅ Excellent
+- **Gabor Task**: 37.95% (340/896) ⚠️ Fair
+- **Color Task**: 38.95% (349/896) ⚠️ Fair
+
+### Confidence Distribution
+- Mainly gives confidence level 3, rarely gives high confidence (4-5)
+- Average confidence: 3.13
+
+## 🔧 Core Components
+
+### Image Generators (src/generators/)
+- **grid.py**: Generates XO grid counting task images
+- **gabor.py**: Generates Gabor texture recognition task images  
+- **color_shading.py**: Generates color brightness comparison task images
+
+### Analysis Tools (src/analysis/)
+- **accuracy_analysis.py**: Calculates model accuracy and confidence distribution
+- **comparison_analysis.py**: Detailed comparison between model choices and correct answers
+
+### Experiment Pipeline (src/experiments/)
+- **full_pipeline.py**: Complete experiment pipeline including data generation, model inference, and result analysis
+- **model_loading_test.py**: Tests loading of different models and memory usage
+
+## 📈 Task Types
+
+### 1. Grid Task (Grid Counting)
+- **Description**: Compare the number of O's and X's in a grid
+- **Difficulty**: Simple geometric counting
+- **7B Performance**: 94.31% ✅
+
+### 2. Gabor Task (Texture Recognition)  
+- **Description**: Recognize Gabor texture orientation and frequency
+- **Difficulty**: Complex texture feature recognition
+- **7B Performance**: 37.95% ⚠️
+
+### 3. Color Task (Color Brightness)
+- **Description**: Compare color brightness levels
+- **Difficulty**: Color perception and comparison
+- **7B Performance**: 38.95% ⚠️
+
+## 🛠️ Development Guide
+
+### Adding New Image Generators
+1. Create a new generator file in `src/generators/`
+2. Implement `generate(params, out_dir)` function
+3. Implement `ground_truth(params)` function
+4. Register the new generator in `full_pipeline.py`
+
+### Adding New Analysis Metrics
+1. Create a new analysis script in `src/analysis/`
+2. Implement corresponding analysis functions
+3. Update the analysis pipeline in `full_pipeline.py`
+
+## 📝 File Naming Conventions
+
+- **Generators**: `{task_name}.py` (e.g., `grid.py`, `gabor.py`)
+- **Analysis scripts**: `{analysis_type}_analysis.py` (e.g., `accuracy_analysis.py`)
+- **Experiment scripts**: `{purpose}.py` (e.g., `full_pipeline.py`)
+- **Data files**: `{description}.{format}` (e.g., `questions_two_stage_concise.jsonl`)
+- **Result files**: `{model_name}_{experiment_type}.{format}` (e.g., `qwen2.5-vl-7b_results.jsonl`)
 
 ## 🤝 Contributing
 
-Welcome to submit Issues and Pull Requests to improve the system:
-- Report bugs or suggest new features
-- Contribute new task types or generators
-- Improve documentation and code quality
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project uses MIT license, see LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## 📞 Contact
 
-For questions or suggestions, please contact through:
-- Submit GitHub Issue
-- Send email to project maintainers
+For questions or suggestions, please contact:
+- Create an Issue
+- Send email to [your-email@example.com]
 
----
+## 🙏 Acknowledgments
 
-**Note**: This is a research tool, please ensure compliance with relevant research ethics guidelines and data protection regulations when using.
+- Thanks to the Qwen team for providing excellent multimodal models
+- Thanks to all contributors for their efforts
