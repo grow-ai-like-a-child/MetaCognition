@@ -1,0 +1,60 @@
+CPU Configuration for Qwen2.5-VL-72B Experiment
+================================================
+
+Hardware Information:
+- CPU Model: Intel(R) Xeon(R) Platinum 8480+
+- Architecture: x86_64
+- Total CPU Cores: 52 (26 cores, 2 threads per core)
+- CPU Family: 6
+- Model: 143
+- Stepping: 8
+- Base Clock: 2.0 GHz
+- BogoMIPS: 4000.00
+
+Cache Information:
+- L1d Cache: 1.6 MiB (52 instances)
+- L1i Cache: Not specified
+- L2 Cache: Not specified
+- L3 Cache: Not specified
+
+Features:
+- Virtualization: VT-x (KVM)
+- Hypervisor: KVM
+- Address Sizes: 52 bits physical, 57 bits virtual
+- Byte Order: Little Endian
+
+Memory Information:
+- Total System Memory: To be determined
+- Memory Type: DDR4/DDR5 (estimated)
+- Memory Speed: To be determined
+
+Performance Characteristics:
+- High core count suitable for parallel processing
+- Enterprise-grade Xeon processor
+- Good for I/O intensive tasks
+- Suitable for model loading and data preprocessing
+
+Recommended Settings:
+- Number of Workers: 4-8 (for data loading)
+- Batch Size: 1 (limited by GPU memory)
+- Threading: Use default PyTorch threading
+- Memory Management: Monitor system memory usage
+
+System Requirements for Qwen2.5-VL-72B:
+- Minimum RAM: 64GB
+- Recommended RAM: 128GB+
+- Storage: SSD recommended for model loading
+- Network: High-speed connection for model download
+
+Optimization Tips:
+1. Use multiple CPU cores for data preprocessing
+2. Enable memory mapping for large datasets
+3. Use efficient data loaders
+4. Monitor CPU usage during inference
+5. Consider using CPU offloading for very large models
+
+Notes:
+- Xeon Platinum 8480+ is a high-performance server CPU
+- 52 cores provide excellent parallel processing capability
+- Suitable for handling large language model workloads
+- Good balance between performance and power efficiency
