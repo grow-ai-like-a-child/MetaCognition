@@ -1,0 +1,80 @@
+{
+  "internvl3_38b": {
+    "total_questions": 2688,
+    "correct_answers": 1266,
+    "accuracy": 0.47098214285714285,
+    "confidence_stats": {
+      "4": {
+        "total": 173,
+        "correct": 61
+      },
+      "5": {
+        "total": 1839,
+        "correct": 1030
+      },
+      "3": {
+        "total": 676,
+        "correct": 175
+      }
+    },
+    "task_stats": {
+      "Grid": {
+        "total": 896,
+        "correct": 812
+      },
+      "Gabor": {
+        "total": 896,
+        "correct": 193
+      },
+      "Color": {
+        "total": 896,
+        "correct": 261
+      },
+      "Unknown": {
+        "total": 0,
+        "correct": 0
+      }
+    }
+  },
+  "qwen2_5_vl_72b": {
+    "total_questions": 2688,
+    "correct_answers": 1526,
+    "accuracy": 0.5677083333333334,
+    "confidence_stats": {
+      "5": {
+        "total": 2651,
+        "correct": 1512
+      },
+      "3": {
+        "total": 16,
+        "correct": 2
+      },
+      "4": {
+        "total": 21,
+        "correct": 12
+      }
+    },
+    "task_stats": {
+      "Unknown": {
+        "total": 2688,
+        "correct": 1526
+      },
+      "Color": {
+        "total": 0,
+        "correct": 0
+      },
+      "Gabor": {
+        "total": 0,
+        "correct": 0
+      },
+      "Grid": {
+        "total": 0,
+        "correct": 0
+      }
+    }
+  },
+  "comparison": {
+    "accuracy_difference": -0.09672619047619052,
+    "better_model": "Qwen2.5-VL-72B"
+  }
+}

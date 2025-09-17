@@ -1,0 +1,50 @@
+{
+  "Color": {
+    "total_questions": 896,
+    "correct_answers": 261,
+    "accuracy": 0.29129464285714285,
+    "average_confidence": 4.411830357142857,
+    "confidence_distribution": {
+      "3": 263,
+      "5": 632,
+      "4": 1
+    },
+    "confidence_accuracy": {
+      "3": 0.19011406844106463,
+      "5": 0.3322784810126582,
+      "4": 1.0
+    }
+  },
+  "Gabor": {
+    "total_questions": 896,
+    "correct_answers": 193,
+    "accuracy": 0.21540178571428573,
+    "average_confidence": 3.9754464285714284,
+    "confidence_distribution": {
+      "3": 405,
+      "5": 383,
+      "4": 108
+    },
+    "confidence_accuracy": {
+      "3": 0.291358024691358,
+      "5": 0.1566579634464752,
+      "4": 0.1388888888888889
+    }
+  },
+  "Grid": {
+    "total_questions": 896,
+    "correct_answers": 812,
+    "accuracy": 0.90625,
+    "average_confidence": 4.910714285714286,
+    "confidence_distribution": {
+      "4": 64,
+      "5": 824,
+      "3": 8
+    },
+    "confidence_accuracy": {
+      "4": 0.703125,
+      "5": 0.9223300970873787,
+      "3": 0.875
+    }
+  }
+}
